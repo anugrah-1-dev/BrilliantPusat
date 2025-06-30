@@ -1,11 +1,11 @@
-name: Laravel CI
+name: Laravel Test
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+    
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
