@@ -40,11 +40,26 @@
     </section>
 
     <section class="about" id="tentang">
-        <h2>TENTANG KAMI</h2>
-        <p>Brilliant English Course adalah salah satu lembaga kursus unggulan di Kampung Inggris Pare yang dikenal
-            dengan metode pembelajaran yang efektif, suasana belajar nyaman, serta fasilitas lengkap yang mendukung
-            proses belajar Bahasa Inggris dari dasar hingga mahir.</p>
-    </section>
+    <div class="about-wrapper">
+        <div class="about-image">
+            <img src="{{ asset('asset/img/brilliant2.jpg') }}" alt="Tentang Kami">
+        </div>
+        <div class="about-text">
+        <div class="about-header"></div>
+            <!-- Langsung di dalam .about-text -->
+<svg class="about-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M6 4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V6a2 2 0 0 0-2-2H6zm0 2h11a1 1 0 0 1 1 1v11H6V6zm2 2v2h7V8H8z"/>
+</svg>
+
+            <div class="section-line"></div>
+            <h2>TENTANG KAMI</h2>
+            <p>Brilliant English Course adalah salah satu lembaga kursus unggulan di Kampung Inggris Pare yang dikenal
+                dengan metode pembelajaran yang efektif, suasana belajar nyaman, serta fasilitas lengkap yang mendukung
+                proses belajar Bahasa Inggris dari dasar hingga mahir.</p>
+        </div>
+    </div>
+</section>
+
 
     <div class="section-divider-wrapper">
         <div class="section-divider"></div>

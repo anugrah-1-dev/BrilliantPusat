@@ -1,3 +1,4 @@
+// ------------------ LIGHTBOX ------------------
 function openLightbox(element) {
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
@@ -14,65 +15,96 @@ function closeLightbox() {
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 
+// ------------------ GALLERY LOOP ------------------
 document.addEventListener("DOMContentLoaded", () => {
-    const galleryContainer = document.getElementById("galleryContainer");
-    const galleryWrapper = document.querySelector(".gallery-wrapper");
+    const wrapper = document.getElementById("galleryWrapper");
+    const container = document.getElementById("galleryContainer");
 
-    if (galleryContainer) {
-        // ✅ Duplikat isi agar bisa loop
-        galleryContainer.innerHTML += galleryContainer.innerHTML;
+    if (!wrapper || !container) return;
 
-        // ✅ Scroll ke posisi tengah (awalan dari duplikat)
-        galleryWrapper.scrollLeft = galleryContainer.scrollWidth / 2;
+    // Duplikat isi galeri secara DOM (lebih aman)
+    const items = Array.from(container.children);
+    items.forEach((item) => {
+        const clone = item.cloneNode(true);
+        container.appendChild(clone);
+    });
 
-        let isDown = false;
-        let startX, scrollLeft;
+    wrapper.scrollLeft = container.scrollWidth / 2;
 
-        galleryWrapper.addEventListener("mousedown", (e) => {
-            isDown = true;
-            galleryWrapper.classList.add("dragging");
-            startX = e.pageX - galleryWrapper.offsetLeft;
-            scrollLeft = galleryWrapper.scrollLeft;
-        });
+    const speed = 1.2;
+    let isDragging = false;
+    let isHovering = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let animationFrameId = null;
 
-        galleryWrapper.addEventListener("mouseleave", () => {
-            isDown = false;
-            galleryWrapper.classList.remove("dragging");
-        });
+    function loopCheck() {
+        const scrollLeft = wrapper.scrollLeft;
+        const totalWidth = container.scrollWidth;
+        const halfWidth = totalWidth / 2;
+        const visibleWidth = wrapper.offsetWidth;
 
-        galleryWrapper.addEventListener("mouseup", () => {
-            isDown = false;
-            galleryWrapper.classList.remove("dragging");
-        });
-
-        galleryWrapper.addEventListener("mousemove", (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - galleryWrapper.offsetLeft;
-            const walk = (x - startX) * 2;
-            galleryWrapper.scrollLeft = scrollLeft - walk;
-        });
-
-        // ✅ Deteksi saat scroll sampai akhir → reset agar looping
-        galleryWrapper.addEventListener("scroll", () => {
-            const scrollLeft = galleryWrapper.scrollLeft;
-            const totalWidth = galleryContainer.scrollWidth;
-            const visibleWidth = galleryWrapper.offsetWidth;
-
-            const half = totalWidth / 2;
-
-            if (scrollLeft <= 0) {
-                // Kalau ke kiri terlalu jauh → lompat ke tengah bagian ke-2
-                galleryWrapper.scrollLeft = half;
-            } else if (scrollLeft >= totalWidth - visibleWidth) {
-                // Kalau ke kanan terlalu jauh → lompat balik
-                galleryWrapper.scrollLeft = half - visibleWidth;
-            }
-        });
-
-    } else {
-        console.warn("galleryContainer tidak ditemukan!");
+        if (scrollLeft >= totalWidth - visibleWidth) {
+            wrapper.scrollLeft -= halfWidth;
+        } else if (scrollLeft <= 0) {
+            wrapper.scrollLeft += halfWidth;
+        }
     }
 
-    console.log("Infinite drag gallery aktif ✅");
+    function autoScroll() {
+        animationFrameId = requestAnimationFrame(autoScroll);
+        if (!isDragging && !isHovering) {
+            wrapper.scrollLeft += speed;
+            loopCheck();
+        }
+    }
+
+    function startAutoScroll() {
+        if (!animationFrameId) {
+            animationFrameId = requestAnimationFrame(autoScroll);
+        }
+    }
+
+    function stopAutoScroll() {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+
+    // Hover events
+    wrapper.addEventListener("mouseenter", () => {
+        isHovering = true;
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+        isHovering = false;
+    });
+
+    // Dragging
+    wrapper.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.pageX;
+        scrollStart = wrapper.scrollLeft;
+        stopAutoScroll();
+        wrapper.classList.add("dragging");
+    });
+
+    window.addEventListener("mouseup", () => {
+        if (isDragging) {
+            isDragging = false;
+            wrapper.classList.remove("dragging");
+            startAutoScroll();
+        }
+    });
+
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const walk = (e.pageX - startX) * 1.5;
+        wrapper.scrollLeft = scrollStart - walk;
+        loopCheck();
+    });
+
+    // Jaga agar tetap looping jika user resize / lag
+    setInterval(loopCheck, 2000);
+
+    startAutoScroll();
 });

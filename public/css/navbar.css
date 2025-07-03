@@ -95,3 +95,17 @@
     font-size: 0.8em;
     letter-spacing: 2px;
 }
+#tentang {
+    scroll-margin-top: 50px; /* Atau sesuai tinggi navbar kamu */
+}
+
+#program {
+    scroll-margin-top: 125px; /* Atau sesuai tinggi navbar kamu */
+}
+#galeri {
+    scroll-margin-top: 200px; /* Atau sesuai tinggi navbar kamu */
+}
+
+#kontak {
+    scroll-margin-top: 100px; /* Atau sesuai tinggi navbar kamu */
+}
