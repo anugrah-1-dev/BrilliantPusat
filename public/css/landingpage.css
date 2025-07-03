@@ -44,6 +44,7 @@ nav {
     overflow: hidden;
     height: 553px;
     background-color: #000;
+    
 }
 
 .carousel-container {
@@ -148,27 +149,106 @@ nav {
 .about {
     background-color: #ffffff;
     color: #333;
-    padding: 4rem 2rem;
-    text-align: center;
+    padding: 100px 0 150px 0;
 }
 
-.about h2 {
-    font-size: 2.2rem;
+.about-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+.about-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    gap: 2rem;
+}
+
+.about-image {
+    flex: 1;
+    max-width: 480px;
+    background: #1a1033; /* Warna ungu gelap lembut seirama dengan --accent */
+    padding: 0.5rem;
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2); /* Shadow lebih gelap dan besar */
+    transition: transform 0.3s ease;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    
+}
+
+
+.about-image:hover {
+    transform: translateY(-4px);
+}
+
+.section-line {
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    margin: 0 0 1.5rem 1.5rem; /* sejajar dengan heading dan icon */
+}
+
+.about-text {
+    flex: 1;
+    max-width: 600px;
+    text-align: left;
+}
+
+.about-text h2 {
+    font-size: 2.4rem;
     margin-bottom: 1rem;
     color: var(--accent);
+     padding-left: 1.5rem; /* samakan dengan padding horizontal <p> */
 }
 
-.about p {
-    font-size: 1.1rem;
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.6;
+.about-text p {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-text {
+        text-align: center;
+    }
+}
+.about-icon {
+    width: 50px;
+    height: 50px;
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent); /* 💙 ini penting */
+}
+
 
 .section-divider-wrapper {
     background-color: #ffffff;
-    padding: 2rem 0;
+    padding: 2rem 0 64px 0; 
     text-align: center;
+   
 }
 
 .section-divider {
@@ -182,8 +262,10 @@ nav {
 .program {
     background-color: #f8f8f8;
     color: #333;
-    padding: 4rem 2rem;
+    padding: 2rem 0 150px 0; 
     text-align: center;
+    
+    
 }
 
 .program h2 {
@@ -371,12 +453,12 @@ footer {
         font-size: 1rem;
     }
 
-    .about h2,
+    
     .program h2 {
         font-size: 1.6rem;
     }
 
-    .about p,
+
     .program-item p {
         font-size: 1rem;
     }
@@ -590,7 +672,7 @@ body {
 .gallery-container {
     display: flex;
     width: fit-content;
-    animation: scroll-gallery 40s linear infinite;
+    /* animation: scroll-gallery 40s linear infinite; */
     gap: 20px;
 }
 
