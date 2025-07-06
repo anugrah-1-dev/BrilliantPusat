@@ -40,7 +40,7 @@
 
     <section class="about-us-section" id="tentang">
         <div class="container">
-            <h2 class="section-title">TENTANG KAMI</h2>
+            <h2 class="about-section-title">TENTANG KAMI</h2>
 
             <div class="about-grid">
                 <div class="about-intro">
@@ -77,6 +77,142 @@
                 </div>
             </div>
         </div>
+
+        
+    </section>
+ <div class="wave-divider">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path class="shape-fill"
+            d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+    </svg>
+</div>
+
+    <section class="registration-flow-section" id="alur-pendaftaran">
+    <div class="container">
+        <h2 class="registration-section-title">ALUR PENDAFTARAN</h2>
+        <p class="registration-section-subtitle">Ikuti langkah-langkah berikut untuk mendaftar di Brilliant English Course:</p>
+
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Isi Formulir Pendaftaran</h3>
+                    <p>Isi data diri Anda secara lengkap melalui formulir online yang tersedia di website kami.</p>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Verifikasi & Konfirmasi</h3>
+                    <p>Tim kami akan menghubungi Anda untuk verifikasi dan memberikan informasi lebih lanjut.</p>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Pembayaran & Bukti Transfer</h3>
+                    <p>Lakukan pembayaran sesuai instruksi, lalu unggah bukti transfer melalui halaman konfirmasi.</p>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Siap Belajar!</h3>
+                    <p>Selamat! Anda resmi terdaftar dan siap mengikuti program pembelajaran di Brilliant English Course.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+ <div class="wave-divider2">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path class="shape-fill2"
+            d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+    </svg>
+</div>
+    
+   <!-- Section 1: Judul + Subtitle + Tabs -->
+<section class="program-section" id="program">
+    <div class="container">
+        <h2>PILIHAN PROGRAM</h2>
+        <p class="section-subtitle">
+            Temukan program yang paling sesuai dengan tujuan Anda dan mulailah perjalanan Anda menjadi fasih berbahasa Inggris bersama kami.
+        </p>
+
+        <!-- Tabs tetap di sini -->
+        <div class="program-tabs">
+            @foreach($programs as $program)
+                <button class="tab-button @if($program->status_aktif_default) active @endif" data-tab="program-{{ $program->id }}">
+                    {{ $program->judul_konten }}
+                </button>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+ <div class="wave-divider3">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path class="shape-fill3"
+            d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+    </svg>
+</div>
+
+<!-- Section 2: Isi Detail Program -->
+<section class="program-content-section" id="program-content">
+    <div class="container">
+        <div class="program-content-wrapper">
+            @foreach($programs as $program)
+                <div 
+                    id="program-{{ $program->id }}" 
+                    class="program-detail @if($program->status_aktif_default) active @endif @if($program->id % 2 == 0) layout-reversed @endif">
+
+                    <div class="content-text content-structured">
+                        <div>
+                            <h3>{{ $program->judul_konten }}</h3>
+                        </div>
+                        <div>
+                            <p class="description">{{ $program->deskripsi }}</p>
+                        </div>
+                        <div>
+                            <p class="benefits-title"><strong>Keunggulan Program:</strong></p>
+                            <ul class="benefits-list">
+                                @foreach(explode("\n", $program->keunggulan) as $item)
+                                    @if(trim($item) != '')
+                                        <li><i class="fas fa-check-circle"></i> {{ trim($item) }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="#" class="btn btn-primary">Daftar Sekarang</a>
+                            <a href="#" class="btn btn-secondary">Lihat Detail</a>
+                        </div>
+                    </div>
+
+                    <div class="content-image">
+                        <img src="{{ asset('uploads/programs/' . $program->gambar) }}" alt="{{ $program->judul_konten }}" onclick="openLightbox(this)">
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+ <div class="wave-divider4">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path class="shape-fill4"
+            d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+    </svg>
+</div>
+
     </section>
     
     <section class="program-section" id="program">
@@ -125,6 +261,7 @@
         </div>
     </section>
  
+
         <script>
             // Menunggu hingga seluruh halaman HTML selesai dimuat
             document.addEventListener('DOMContentLoaded', function() {
