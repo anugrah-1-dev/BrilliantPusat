@@ -392,27 +392,40 @@ return [
                     'url'  => '/admin/programs/online',
                     'icon' => 'fas fa-globe',
                 ],
-                [
-                    'text' => 'Camp',
-                    'url'  => '/admin/programs/camp',
-                    'icon' => 'fas fa-campground',
-                ],
-
-                [
-                    'text' => 'Manajemen Kamar',
-                    'url'  => 'admin/rooms',
-                    'icon' => 'fas fa-bed',
-                ],
+        
 
             ],
         ],
+        [
+            'header' => 'CAMP',
+        ],
+        [
+            'text' => 'Menejemen Camp',
+            'icon' => 'fas fa-list',
+            'submenu' => [
+        [
+            'text' => 'Camp',
+            'url'  => '/admin/programs/camp',
+            'icon' => 'fas fa-campground',
+        ],
+
+        [
+            'text' => 'Manajemen Kamar',
+            'url'  => 'admin/rooms',
+            'icon' => 'fas fa-bed',
+        ],
+            ],],
 
         ['header' => 'DATA PENDAFTAR'],
+        [
+            'text' => 'Pendaftar Program',
+            'icon' => 'fas fa-user-friends',
+            'submenu' => [
 
         [
             'text' => 'Pendaftar Offline',
             'route'  => 'admin.pendaftaran.offline.index',
-            'icon'   => 'fas fa-user-friends',
+            'icon'   => 'fas fa-user',
             'active' => ['admin/pendaftaran/offline*'],
         ],
         [
@@ -420,6 +433,8 @@ return [
             'route'  => 'admin.pendaftaran.online.index',
             'icon'   => 'fas fa-laptop',
             'active' => ['admin/pendaftaran/online*'],
+        ],
+            ],
         ],
 
 
