@@ -61,17 +61,25 @@
                                         <span class="badge bg-secondary">Nonaktif</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <a href="{{ route('admin.pamflet_programs.edit', $program->id) }}"
-                                        class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('admin.pamflet_programs.destroy', $program->id) }}"
-                                        method="POST" class="d-inline"
-                                        onsubmit="return confirm('Anda yakin ingin menghapus program ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                    </form>
-                                </td>
+                                <td class="text-center">
+    <div class="btn-group btn-group-sm" role="group">
+        <a href="{{ route('admin.pamflet_programs.edit', $program->id) }}"
+            class="btn btn-warning" title="Edit">
+            <i class="fas fa-edit"></i>
+        </a>
+        <form action="{{ route('admin.pamflet_programs.destroy', $program->id) }}"
+            method="POST"
+            onsubmit="return confirm('Anda yakin ingin menghapus program ini?')"
+            style="display: inline-block;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" title="Hapus">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </form>
+    </div>
+</td>
+
                             </tr>
                         @empty
                             <tr>
@@ -194,6 +202,17 @@
             pointer-events: none;
             background-color: #f8f9fa;
         }
+
+        .btn-group .btn,
+.btn-group form button {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
     </style>
 @endpush
 
