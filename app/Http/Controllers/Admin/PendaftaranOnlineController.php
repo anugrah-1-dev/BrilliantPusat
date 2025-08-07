@@ -77,18 +77,28 @@ class PendaftaranOnlineController extends Controller
     /**
      * Memperbarui status pendaftaran di database.
      */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|in:approved,rejected,pending',
-        ]);
+   public function update(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:approved,rejected,pending',
+    ]);
 
-        $pendaftaran = PendaftaranProgramOnline::findOrFail($id);
-        $pendaftaran->status = $request->status;
-        $pendaftaran->save();
+    $pendaftaran = PendaftaranProgramOnline::findOrFail($id);
 
-        return redirect()->route('admin.pendaftaran.online.index')->with('success', 'Status pendaftaran ' . $pendaftaran->trx_id . ' berhasil diperbarui.');
-    }
+    // Mapping status dari input ke nilai yang disimpan di database
+    $statusMapping = [
+        'approved' => 'diterima',
+        'rejected' => 'ditolak',
+        'pending' => 'pending',
+    ];
+
+    $pendaftaran->status = $statusMapping[$request->status] ?? 'pending';
+    $pendaftaran->save();
+
+    return redirect()->route('admin.pendaftaran.online.index')
+        ->with('success', 'Status pendaftaran ' . $pendaftaran->trx_id . ' berhasil diperbarui.');
+}
+
 
     /**
      * Menghapus data pendaftaran.

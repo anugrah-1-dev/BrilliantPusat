@@ -90,7 +90,8 @@
                     <tbody>
                         @forelse ($pendaftar as $index => $data)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
+                                <td>{{ ($pendaftar->currentPage() - 1) * $pendaftar->perPage() + $index + 1 }}</td>
+
                                 <td>{{ $data->nama_lengkap }}</td>
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->no_hp }}</td>
@@ -200,6 +201,10 @@
                         @endforelse
                     </tbody>
                 </table>
+               
+</div>
+ <div class="mt-3 d-flex justify-content-center">
+    {{ $pendaftar->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
@@ -239,7 +244,7 @@
         }
 
         .table-responsive {
-            max-height: 500px;
+            max-height: 450px;
         }
 
         .table-responsive::-webkit-scrollbar {

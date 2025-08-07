@@ -109,10 +109,10 @@
                                         if ($data->status === 'pending') {
                                             $statusClass = 'warning';
                                         }
-                                        if ($data->status === 'approved') {
+                                        if ($data->status === 'diterima') {
                                             $statusClass = 'success';
                                         }
-                                        if ($data->status === 'rejected') {
+                                        if ($data->status === 'ditolak') {
                                             $statusClass = 'danger';
                                         }
                                     @endphp

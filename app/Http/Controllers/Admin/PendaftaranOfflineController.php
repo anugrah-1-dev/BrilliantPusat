@@ -51,10 +51,19 @@ class PendaftaranOfflineController extends Controller
         ]);
 
         $pendaftaran = PendaftaranProgramOffline::findOrFail($id);
-        $pendaftaran->status = $request->status;
-        $pendaftaran->save();
 
-        return redirect()->route('admin.pendaftaran.offline.index')->with('success', 'Status pendaftaran ' . $pendaftaran->trx_id . ' berhasil diperbarui.');
+$statusMapping = [
+        'approved' => 'diterima',
+        'rejected' => 'ditolak',
+        'pending' => 'pending',
+    ];
+
+    $pendaftaran->status = $statusMapping[$request->status] ?? 'pending';
+    $pendaftaran->save();
+
+    return redirect()->route('admin.pendaftaran.offline.index')
+        ->with('success', 'Status pendaftaran ' . $pendaftaran->trx_id . ' berhasil diperbarui.');
+       
     }
 
     public function destroy($id)

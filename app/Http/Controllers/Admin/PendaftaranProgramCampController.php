@@ -16,7 +16,8 @@ class PendaftaranProgramCampController extends Controller
 {
     public function index()
     {
-        $pendaftar = PendaftaranProgramCamp::with(['programCamp', 'period', 'bank'])->latest()->get();
+        $pendaftar = PendaftaranProgramCamp::with(['programCamp', 'period', 'bank'])->latest()->paginate(10);
+
 
         return view('admin.camp.index', compact('pendaftar'));
     }
