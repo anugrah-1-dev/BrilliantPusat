@@ -59,6 +59,7 @@
                     </div>
                 </div>
             </form>
+            
         </div>
     </div>
 
@@ -83,6 +84,7 @@
                             <th>Kamar</th>
                             <th>Status</th>
                             <th>Bank</th>
+                            <th>Tipe Pembayaran</th>
                             <th>Bukti</th>
                             <th width="10%">Aksi</th>
                         </tr>
@@ -115,6 +117,14 @@
                                 <td>
                                     {{ $data->bank->name ?? '-' }}
                                 </td>
+                                <td>
+                                    @if ($data->payment_type === 'tunai')
+                                        <span style="color: green; font-weight: bold;">Tunai</span>
+                                    @elseif ($data->payment_type === 'nontunai')
+                                        <span style="color: blue; font-weight: bold;">Non Tunai</span>
+                                    @endif
+                                </td>
+                                
                                 <td>
                                     @if ($data->bukti_pembayaran)
                                         <a href="{{ route('admin.pendaftaran.camp.bukti', $data->id) }}" target="_blank"

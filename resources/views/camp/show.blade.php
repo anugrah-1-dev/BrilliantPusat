@@ -69,9 +69,38 @@
             <!-- Header Section -->
             <div class="text-center mb-4 mb-lg-5">
                 <h1 class="display-4 fw-bold text-dark mb-3">{{ $program->nama }}</h1>
+
+             
                 <p class="lead text-muted mb-3">Choose your program duration and fill out the registration form</p>
-                <div class="mx-auto border-bottom border-3 border-primary" style="width: 80px;"></div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal">
+                    Lihat Tutorial Pendaftaran Camp BIE+
+                  </button>
             </div>
+
+            
+<!-- Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title text-center w-100" id="videoModalLabel">Tutorial Pendaftaran Camp BIE+</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+          <div class="sosmed-card-video" style="max-width: 560px; width: 100%;">
+            <iframe width="100%" height="315"
+                src="https://www.youtube.com/embed/rMfdvef5os4"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+          
+  
 
             <!-- Image and Description Section -->
             <div class="row g-3 g-lg-4 mb-4 mb-lg-5">
@@ -170,17 +199,51 @@
                             </div>
 
 
+                            <div class="row">
+                            <!-- JavaScript untuk menampilkan/sembunyikan form bank -->
                             <div class="col-12 col-md-6 mt-3">
-                                <label for="bank_id" class="form-label fw-semibold">Pilih Bank</label>
-                                <select name="bank_id" id="bank_id" class="form-select form-select-lg" required>
-                                    <option value="">-- Pilih Bank --</option>
-                                    @isset($banks) <!-- Pastikan variabel banks ada -->
-                                        @foreach ($banks as $bank)
-                                            <option value="{{ $bank->id }}">{{ $bank->name }}</option>
-                                        @endforeach
-                                    @endisset
+                                <label for="payment_type" class="form-label fw-semibold">Jenis Pembayaran</label>
+                                <select name="payment_type" id="payment_type" class="form-select form-select-lg" required>
+                                    <option value="">-- Pilih Jenis Pembayaran --</option>
+                                    <option value="tunai" {{ old('payment_type') == 'tunai' ? 'selected' : '' }}>Tunai</option>
+                                    <option value="nontunai" {{ old('payment_type') == 'nontunai' ? 'selected' : '' }}>NonTunai</option>
                                 </select>
                             </div>
+                            
+                            <div class="col-12 col-md-6 mt-3" id="bankForm" style="display: none;">
+                                <label for="bank_id" class="form-label fw-semibold">Pilih Bank</label>
+                                <select name="bank_id" id="bank_id" class="form-select form-select-lg">
+                                    <option value="">-- Pilih Bank --</option>
+                                    @foreach ($banks as $bank)
+                                        <option value="{{ $bank->id }}" {{ old('bank_id') == $bank->id ? 'selected' : '' }}>
+                                            {{ $bank->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                           
+                            <div class="col-12 col-md-6 mt-3 bukti-section" style="display:none;">
+                                <label for="bukti_pembayaran" class="form-label fw-semibold">Upload Bukti Pembayaran</label>
+                                <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="form-control" accept="image/*" />
+                            </div>
+                            
+                            <script>
+                                document.getElementById('payment_type').addEventListener('change', function () {
+                                    const bankForm = document.getElementById('bankForm');
+                                    if (this.value === 'nontunai') {
+                                        bankForm.style.display = 'block';
+                                        document.getElementById('bank_id').setAttribute('required', 'required');
+                                    } else {
+                                        bankForm.style.display = 'none';
+                                        document.getElementById('bank_id').removeAttribute('required');
+                                        document.getElementById('bank_id').value = '';
+                                    }
+                                });
+                            
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.getElementById('payment_type').dispatchEvent(new Event('change'));
+                                });
+                            </script>
 
                             <div class="col-12">
                                 <label class="form-label fw-semibold d-block mb-2">Package Duration</label>

@@ -45,7 +45,7 @@
                                 <th width="5%">No</th>
                                 <th width="10%">Thumbnail</th>
                                 <th width="15%">Nama Program</th>
-                                <th width="10%">Kategori</th>
+                                {{-- <th width="10%">Kategori</th> --}}
                                 <th width="5%">Stok</th>
                                 <th width="15%">Harga</th>
                                 <th width="25%">Fasilitas</th>
@@ -69,7 +69,7 @@
                                         <strong>{{ $program->nama }}</strong><br>
                                         <small class="text-muted">Slug: {{ $program->slug ?? '-' }}</small>
                                     </td>
-                                    <td>{{ $program->kategori ?? '-' }}</td>
+                                    {{-- <td>{{ $program->kategori ?? '-' }}</td> --}}
                                     <td class="text-center">
                                         <span id="stok-{{ $program->id }}">{{ $program->stok ?? 0 }}</span>
                                     </td>

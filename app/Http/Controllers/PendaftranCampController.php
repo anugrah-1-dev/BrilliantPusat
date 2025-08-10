@@ -48,7 +48,10 @@ class PendaftranCampController extends Controller
             'period_id'      => 'required|exists:periods,id',
             'durasi_paket'   => 'required|in:perhari,satu_minggu,dua_minggu,satu_bulan,dua_bulan,tiga_bulan',
             'gender'         => 'required|in:putra,putri',
-            'bank_id'        => 'required|exists:banks,id',
+            'payment_type' => 'required|in:tunai,nontunai',
+            'bank_id'      => 'nullable|required_if:payment_type,nontunai|exists:banks,id',
+                                ], [
+                                    'bank_id.required_if' => 'Bank harus dipilih jika metode pembayaran non tunai.',
         ]);
 
         // Cek stok terlebih dahulu
@@ -63,6 +66,7 @@ class PendaftranCampController extends Controller
             ->first();
         $nextNumber = $last ? ((int) str_replace($prefix, '', $last->trx_id) + 1) : 1;
         $trx_id = $prefix . $nextNumber;
+        
 
         // Simpan pendaftaran
         $pendaftaran = PendaftaranProgramCamp::create([
@@ -75,6 +79,7 @@ class PendaftranCampController extends Controller
             'period_id'        => $validated['period_id'],
             'durasi_paket'     => $validated['durasi_paket'],
             'bank_id'          => $validated['bank_id'],
+            'payment_type'     => $validated['payment_type'], 
             'status'           => 'pending',
             'nama_kamar'       => null,
             'trx_id'           => $trx_id,
@@ -199,22 +204,34 @@ class PendaftranCampController extends Controller
     }
 
 
-
     public function halamanPembayaran($trx_id)
     {
-        $pendaftaran = PendaftaranProgramCamp::where('trx_id', $trx_id)->firstOrFail();
-        $pendaftaran = PendaftaranProgramCamp::with('bank')->where('trx_id', $trx_id)->firstOrFail();
+        $pendaftaran = PendaftaranProgramCamp::with('bank')
+            ->where('trx_id', $trx_id)
+            ->firstOrFail();
+        
+        $paymentType = $pendaftaran->payment_type; // ambil langsung dari kolom payment_type
+        
+        if ($paymentType === 'tunai') {
+            return view('camp.tunai', compact('pendaftaran'));
+        }
+    
         return view('camp.pembayaran', compact('pendaftaran'));
     }
+    
+    
+    
+    
 
 
+    // public function showPembayaran($id)
+    // {
+    //     $pendaftaran = PendaftaranProgramCamp::with('programCamp')->findOrFail($id);
+    //     return view('camp.pembayaran', compact('pendaftaran'));
 
-    public function showPembayaran($id)
-    {
-        $pendaftaran = PendaftaranProgramCamp::with('programCamp')->findOrFail($id);
-        return view('camp.pembayaran', compact('pendaftaran'));
+    // }
 
-    }
+    
     public function uploadBukti(Request $request)
 {
     $request->validate([

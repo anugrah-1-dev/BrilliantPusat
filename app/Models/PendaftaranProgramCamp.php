@@ -22,6 +22,7 @@ class PendaftaranProgramCamp extends Model
         'bukti_pembayaran',
         'status',
         'bank_id',
+        'payment_type',
         'room_id',
     ];
 
