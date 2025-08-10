@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Exports\PendaftaranCampExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Rooms;
+use Illuminate\Support\Facades\Storage;
 
 class PendaftaranProgramCampController extends Controller
 {
@@ -61,7 +62,21 @@ class PendaftaranProgramCampController extends Controller
     public function showBukti($id)
     {
         $pendaftar = PendaftaranProgramCamp::findOrFail($id);
-        return view('admin.camp.bukti', compact('pendaftar'));
+    
+        // Pastikan file bukti pembayaran ada
+        if (empty($pendaftar->bukti_pembayaran) || !Storage::disk('public')->exists($pendaftar->bukti_pembayaran)) {
+            abort(404, 'Bukti pembayaran tidak ditemukan.');
+        }
+    
+        // Ambil path lengkap file di storage
+        $path = storage_path('app/public/' . $pendaftar->bukti_pembayaran);
+        $mimeType = mime_content_type($path);
+    
+        // Tampilkan file secara langsung di browser
+        return response()->file($path, [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'inline; filename="bukti-'.$pendaftar->id.'"'
+        ]);
     }
 
 

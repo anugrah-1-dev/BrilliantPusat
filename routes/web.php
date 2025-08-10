@@ -236,4 +236,5 @@ Route::middleware(['auth', 'role:officer'])->prefix('officer')->name('officer.')
     Route::get('pendaftaran/camp/{id}/edit', [PendaftaranProgramCampController::class, 'edit'])->name('pendaftaran.camp.edit');
     Route::put('pendaftaran/camp/{id}', [PendaftaranProgramCampController::class, 'update'])->name('pendaftaran.camp.update');
     Route::get('pendaftaran/camp/{id}/bukti', [PendaftaranProgramCampController::class, 'showBukti'])->name('pendaftaran.camp.bukti');
+
 });

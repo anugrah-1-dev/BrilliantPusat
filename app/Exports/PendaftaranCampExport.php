@@ -19,7 +19,6 @@ class PendaftaranCampExport implements FromCollection, WithHeadings, WithEvents,
 
     public function __construct($startDate, $endDate)
     {
-        // Filter by tanggal
         $this->pendaftar = PendaftaranProgramCamp::with(['programCamp', 'period'])
             ->whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
@@ -40,7 +39,8 @@ class PendaftaranCampExport implements FromCollection, WithHeadings, WithEvents,
                     : 'Tidak ada',
                 'durasi_paket'     => $item->durasi_paket,
                 'nama_kamar'       => $item->nama_kamar,
-                'bukti_pembayaran' => '', // Kosong karena gambar
+                'payment_type'     => $item->payment_type === 'tunai' ? 'Tunai' : 'Non Tunai',
+                'bukti_pembayaran' => $item->payment_type === 'tunai' ? 'Tunai / Cash' : '',
                 'status'           => $item->status,
             ];
         });
@@ -57,79 +57,107 @@ class PendaftaranCampExport implements FromCollection, WithHeadings, WithEvents,
             'Periode',
             'Durasi Paket',
             'Nama Kamar',
+            'Tipe Pembayaran',
             'Bukti Pembayaran',
             'Status',
         ];
     }
 
     public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function (AfterSheet $event) {
-                $sheet = $event->sheet;
-                $highestRow = $sheet->getDelegate()->getHighestRow();
-                $highestColumn = $sheet->getDelegate()->getHighestColumn();
-                $cellRange = 'A1:' . $highestColumn . $highestRow;
+{
+    return [
+        AfterSheet::class => function (AfterSheet $event) {
+            $sheet = $event->sheet->getDelegate();
 
-                $sheet->getStyle($cellRange)->applyFromArray([
-                    'borders' => [
-                        'allBorders' => ['borderStyle' => Border::BORDER_THIN],
-                    ],
-                    'alignment' => [
-                        'horizontal' => Alignment::HORIZONTAL_CENTER,
-                        'vertical' => Alignment::VERTICAL_CENTER,
-                        'wrapText' => true,
-                    ],
-                ]);
+            $highestRow = $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+            $cellRange = 'A1:' . $highestColumn . $highestRow;
 
-                for ($row = 1; $row <= $highestRow; $row++) {
-                    $sheet->getDelegate()->getRowDimension($row)->setRowHeight(60);
-                }
+            // Styling umum
+            $sheet->getStyle($cellRange)->applyFromArray([
+                'borders' => [
+                    'allBorders' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+                ],
+            ]);
 
-                foreach (range('A', $highestColumn) as $col) {
-                    $sheet->getDelegate()->getColumnDimension($col)->setAutoSize(true);
-                }
+            // Header bold & ukuran baris header
+            $sheet->getStyle('A1:' . $highestColumn . '1')->getFont()->setBold(true);
+            $sheet->getRowDimension(1)->setRowHeight(30);
 
-                $sheet->getStyle('A1:' . $highestColumn . '1')->applyFromArray([
-                    'font' => ['bold' => true],
-                ]);
-                $sheet->getDelegate()->getRowDimension(1)->setRowHeight(30);
-            },
-        ];
-    }
+            // Set tinggi baris data (sesuaikan jika ingin lebih tinggi)
+            for ($row = 2; $row <= $highestRow; $row++) {
+                $sheet->getRowDimension($row)->setRowHeight(60); // tinggi dalam poin — diperlakukan sebagai px di offset
+            }
 
-    public function drawings()
-    {
-        $drawings = [];
-        $rowHeight = 60;
-        $columnWidthInPixels = 80;
+            // Auto size kolom lain
+            foreach (range('A', $highestColumn) as $col) {
+                $sheet->getColumnDimension($col)->setAutoSize(true);
+            }
 
-        foreach ($this->pendaftar as $index => $item) {
-            if ($item->bukti_pembayaran && Storage::disk('public')->exists($item->bukti_pembayaran)) {
-                $pathToFile = storage_path('app/public/' . $item->bukti_pembayaran);
+            // Pastikan kolom J (Bukti Pembayaran) punya lebar tetap supaya perhitungan offset konsisten
+            $sheet->getColumnDimension('J')->setWidth(18); // ubah angka jika perlu
 
-                if (@getimagesize($pathToFile)) {
-                    list($originalWidth, $originalHeight) = getimagesize($pathToFile);
+            // Hitung lebar kolom J dalam pixel (estimasi Excel -> pixel)
+            $colWidth = $sheet->getColumnDimension('J')->getWidth(); // 18
+            $columnWidthInPixels = (int) floor($colWidth * 7) + 5; // formula pendekatan
 
-                    $newHeight = $rowHeight - 10;
-                    $newWidth = ($originalWidth / $originalHeight) * $newHeight;
+            // Pastikan teks pada kolom J rata tengah
+            $sheet->getStyle('J2:J' . $highestRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('J2:J' . $highestRow)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
 
-                    $drawing = new Drawing();
-                    $drawing->setName('Bukti');
-                    $drawing->setDescription('Bukti Pembayaran');
-                    $drawing->setPath($pathToFile);
-                    $drawing->setHeight($newHeight);
-                    $drawing->setOffsetX(($columnWidthInPixels - $newWidth));
-                    $drawing->setOffsetY(($rowHeight - $newHeight));
+            // Sisipkan gambar per baris dan hitung scale + offset agar CENTERED
+            foreach ($this->pendaftar as $index => $item) {
+                if ($item->bukti_pembayaran && Storage::disk('public')->exists($item->bukti_pembayaran)) {
+                    $pathToFile = storage_path('app/public/' . $item->bukti_pembayaran);
 
-                    $drawing->setCoordinates('I' . ($index + 2)); // Kolom I, mulai dari baris 2
+                    if (@getimagesize($pathToFile)) {
+                        list($origW, $origH) = getimagesize($pathToFile);
 
-                    $drawings[] = $drawing;
+                        $rowNum = $index + 2; // baris di excel (header di baris 1)
+                        $cellHeightPx = 60; // sama dengan rowHeight di atas (adjust jika perlu)
+
+                        // ruang maksimum di cell (sedikit padding agar tidak nempel border)
+                        $maxW = $columnWidthInPixels - 10;
+                        $maxH = $cellHeightPx - 10;
+
+                        // scale proporsional sehingga tidak melebihi cell
+                        $scale = min($maxW / $origW, $maxH / $origH, 1);
+
+                        $newW = (int) round($origW * $scale);
+                        $newH = (int) round($origH * $scale);
+
+                        $drawing = new Drawing();
+                        $drawing->setName('Bukti');
+                        $drawing->setDescription('Bukti Pembayaran');
+                        $drawing->setPath($pathToFile);
+                        $drawing->setResizeProportional(true);
+                        $drawing->setWidth($newW); // gunakan width agar proporsional terjaga
+
+                        // hitung offset untuk memposisikan di tengah cell
+                        $offsetX = max((int) (($columnWidthInPixels - $newW) / 2), 0);
+                        $offsetY = max((int) (($cellHeightPx - $newH) / 2), 0);
+
+                        $drawing->setOffsetX($offsetX);
+                        $drawing->setOffsetY($offsetY);
+                        $drawing->setCoordinates('J' . $rowNum);
+
+                        // tambahkan langsung ke worksheet
+                        $drawing->setWorksheet($sheet);
+                    }
                 }
             }
-        }
+        },
+    ];
+}
 
-        return $drawings;
-    }
-
+// kembalikan drawings kosong supaya tidak duplicate
+public function drawings()
+{
+    return [];
+}
 }

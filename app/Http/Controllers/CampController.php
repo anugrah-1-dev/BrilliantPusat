@@ -15,7 +15,7 @@ class CampController extends Controller
 {
     public function index()
     {
-        $camps = ProgramCamp::latest()->paginate(9);
+        $camps = ProgramCamp::latest()->paginate(10);
         return view('camp.index', compact('camps'));
     }
 
