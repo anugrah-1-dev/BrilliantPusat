@@ -15,6 +15,7 @@
         <div class="carousel">
             <div class="slides">
                 <div class="slide active">
+
                     <img src={{ asset('asset/img/brilliant1.jpg') }} alt="Belajar Bahasa Mandarin 1">
                 </div>
                 <div class="slide">
@@ -22,6 +23,15 @@
                 </div>
                 <div class="slide">
                     <img src={{ asset('asset/img/brilliant3.jpg') }} alt="Belajar Bahasa Mandarin 3">
+
+                    <img src={{ asset('asset/img/brilliantclass4.jpg') }} alt="Belajar Bahasa Mandarin 1">
+                </div>
+                <div class="slide">
+                    <img src={{ asset('asset/img/brilliantclass5.jpg') }} alt="Belajar Bahasa Mandarin 2">
+                </div>
+                <div class="slide">
+                    <img src={{ asset('asset/img/brilliantclass3.jpg') }} alt="Belajar Bahasa Mandarin 3">
+
                 </div>
             </div>
             <button class="prev">&#10094;</button>
@@ -119,7 +129,7 @@
 
     {{-- JS filter program sama seperti versi Inggris --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const programItems = document.querySelectorAll('.program-item');
 
@@ -130,7 +140,7 @@
             });
 
             filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const filterValue = this.getAttribute('data-filter');
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
