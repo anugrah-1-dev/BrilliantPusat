@@ -255,288 +255,253 @@
                                             <div class="tab-content" id="servicesTabContent">
                                                 {{-- ================== TAB CATERING ================== --}}
                                                 <div class="tab-pane fade show active" id="catering" role="tabpanel">
-                                                    <div class="row">
-                                                        @if (isset($catering_packages) && count($catering_packages) > 0)
-                                                            @foreach ($catering_packages as $catering)
-                                                                <div class="col-md-4 mb-4">
-                                                                    <div class="card h-100 service-card">
-                                                                        <div class="text-center p-3">
-                                                                            <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/150' }}"
-                                                                                alt="{{ $catering->nama_paket }}"
-                                                                                class="img-fluid rounded"
-                                                                                style="height: 150px; object-fit: cover;">
-                                                                            <button type="button"
-                                                                                class="btn btn-outline-info btn-sm w-100 py-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#detailCatering{{ $catering->id }}">
-                                                                                Lihat Detail
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="card-body d-flex flex-column p-3">
-                                                                            <div class="text-center mb-2">
-                                                                                <h6 class="card-title fw-bold mb-1">
-                                                                                    {{ $catering->nama_paket }}</h6>
-                                                                                <p
-                                                                                    class="card-text text-primary fw-semibold mb-2">
-                                                                                    Rp
-                                                                                    {{ number_format($catering->harga, 0, ',', '.') }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="mt-auto">
-                                                                                <div
-                                                                                    class="d-flex justify-content-center align-items-center mb-2">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-sm btn-outline-secondary px-2"
-                                                                                        onclick="decreaseQuantity('catering{{ $catering->id }}')">-</button>
-                                                                                    <input type="number"
-                                                                                        id="catering{{ $catering->id }}"
-                                                                                        class="form-control form-control-sm mx-2 text-center"
-                                                                                        value="0" min="0" style="width: 50px;">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-sm btn-outline-secondary px-2"
-                                                                                        onclick="increaseQuantity('catering{{ $catering->id }}')">+</button>
-                                                                                </div>
+                                                    <div class="scroll-container">
+                                                        <div class="d-flex flex-nowrap">
+                                                            @if (isset($catering_packages) && count($catering_packages) > 0)
+                                                                @foreach ($catering_packages as $catering)
+                                                                    <div class="card me-3" style="min-width: 220px;">
+                                                                        <div class="card-header bg-light">
+                                                                            <div class="card">
+                                                                                <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/150' }}"
+                                                                                    alt="{{ $catering->nama_paket }}"
+                                                                                    class="img-fluid rounded"
+                                                                                    style="height: 150px; object-fit: cover;">
                                                                                 <button type="button"
-                                                                                    class="btn btn-primary btn-sm w-100 py-1 mb-2"
-                                                                                    onclick="addToCart('catering', {{ $catering->id }}, '{{ $catering->nama_paket }}', {{ $catering->harga }}, document.getElementById('catering{{ $catering->id }}').value)">
-                                                                                    <i class="bi bi-cart-plus me-1"></i> Tambah
+                                                                                    class="btn btn-outline-info btn-sm w-100 py-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#detailCatering{{ $catering->id }}">
+                                                                                    Lihat Detail
                                                                                 </button>
-
+                                                                            </div>
+                                                                            <div class="card-body d-flex flex-column p-3">
+                                                                                <div class="text-center mb-2">
+                                                                                    <h6 class="card-title fw-bold mb-1">
+                                                                                        {{ $catering->nama_paket }}
+                                                                                    </h6>
+                                                                                    <p class="card-text text-primary fw-semibold mb-2">
+                                                                                        Rp {{ number_format($catering->harga, 0, ',', '.') }}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="mt-auto">
+                                                                                    <div class="d-flex justify-content-center align-items-center mb-2">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-sm btn-outline-secondary px-2"
+                                                                                            onclick="decreaseQuantity('catering{{ $catering->id }}')">-</button>
+                                                                                        <input type="number"
+                                                                                            id="catering{{ $catering->id }}"
+                                                                                            class="form-control form-control-sm mx-2 text-center"
+                                                                                            value="0" min="0" style="width: 50px;">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-sm btn-outline-secondary px-2"
+                                                                                            onclick="increaseQuantity('catering{{ $catering->id }}')">+</button>
+                                                                                    </div>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary btn-sm w-100 py-1 mb-2"
+                                                                                        onclick="addToCart('catering', {{ $catering->id }}, '{{ $catering->nama_paket }}', {{ $catering->harga }}, document.getElementById('catering{{ $catering->id }}').value)">
+                                                                                        <i class="bi bi-cart-plus me-1"></i> Tambah
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-
-                                                                <!-- Modal Catering -->
-                                                                <div class="modal fade" id="detailCatering{{ $catering->id }}"
-                                                                    tabindex="-1" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content rounded-3 shadow">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">
-                                                                                    {{ $catering->nama_paket }}</h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/300' }}"
-                                                                                    class="img-fluid mb-3 rounded"
-                                                                                    alt="{{ $catering->nama_paket }}">
-                                                                                <p><strong>Harga:</strong> Rp
-                                                                                    {{ number_format($catering->harga, 0, ',', '.') }}
-                                                                                </p>
-                                                                                <p><strong>Status:</strong>
-                                                                                    {{ ucfirst($catering->status) }}</p>
-                                                                                <p><strong>Deskripsi:</strong><br>{{ $catering->deskripsi ?? 'Tidak ada deskripsi' }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Tutup</button>
+                                            
+                                                                    <!-- Modal Catering -->
+                                                                    <div class="modal fade" id="detailCatering{{ $catering->id }}" tabindex="-1" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content rounded-3 shadow">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title">{{ $catering->nama_paket }}</h5>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/300' }}"
+                                                                                        class="img-fluid mb-3 rounded"
+                                                                                        alt="{{ $catering->nama_paket }}">
+                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($catering->harga, 0, ',', '.') }}</p>
+                                                                                    <p><strong>Status:</strong> {{ ucfirst($catering->status) }}</p>
+                                                                                    <p><strong>Deskripsi:</strong><br>{{ $catering->deskripsi ?? 'Tidak ada deskripsi' }}</p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            @endforeach
-                                                        @else
-                                                            <p class="text-center">Belum ada paket catering.</p>
-                                                        @endif
+                                                                @endforeach
+                                                            @else
+                                                                <p class="text-center">Belum ada paket catering.</p>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-
-
+                                            
                                                 {{-- ================== TAB LAUNDRY ================== --}}
                                                 <div class="tab-pane fade" id="laundry" role="tabpanel">
-                                                    <div class="row">
-                                                        @if (isset($laundry_packages) && count($laundry_packages) > 0)
-                                                            @foreach ($laundry_packages as $laundry)
-                                                                <div class="col-md-4 mb-4">
-                                                                    <div class="card h-100 service-card">
-                                                                        <div class="text-center p-3">
-                                                                            <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/150' }}"
-                                                                                alt="{{ $laundry->nama_paket }}"
-                                                                                class="img-fluid rounded"
-                                                                                style="height: 150px; object-fit: cover;">
-                                                                            <button type="button"
-                                                                                class="btn btn-outline-info btn-sm w-100 py-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#detailLaundry{{ $laundry->id }}">
-                                                                                Lihat Detail
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="card-body d-flex flex-column p-3">
-                                                                            <div class="text-center mb-2">
-                                                                                <h6 class="card-title fw-bold mb-1">
-                                                                                    {{ $laundry->nama_paket }}</h6>
-                                                                                <p
-                                                                                    class="card-text text-primary fw-semibold mb-2">
-                                                                                    Rp
-                                                                                    {{ number_format($laundry->harga, 0, ',', '.') }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="mt-auto">
-                                                                                <div
-                                                                                    class="d-flex justify-content-center align-items-center mb-2">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-sm btn-outline-secondary px-2"
-                                                                                        onclick="decreaseQuantity('laundry{{ $laundry->id }}')">-</button>
-                                                                                    <input type="number"
-                                                                                        id="laundry{{ $laundry->id }}"
-                                                                                        class="form-control form-control-sm mx-2 text-center"
-                                                                                        value="0" min="0" style="width: 50px;">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-sm btn-outline-secondary px-2"
-                                                                                        onclick="increaseQuantity('laundry{{ $laundry->id }}')">+</button>
-                                                                                </div>
+                                                    <div class="scroll-container">
+                                                        <div class="d-flex flex-nowrap">
+                                                            @if (isset($laundry_packages) && count($laundry_packages) > 0)
+                                                                @foreach ($laundry_packages as $laundry)
+                                                                    <div class="card me-3" style="min-width: 220px;">
+                                                                        <div class="card-header bg-light">
+                                                                            <div class="card">
+                                                                                <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/150' }}"
+                                                                                    alt="{{ $laundry->nama_paket }}"
+                                                                                    class="img-fluid rounded"
+                                                                                    style="height: 150px; object-fit: cover;">
                                                                                 <button type="button"
-                                                                                    class="btn btn-primary btn-sm w-100 py-1 mb-2"
-                                                                                    onclick="addToCart('laundry', {{ $laundry->id }}, '{{ $laundry->nama_paket }}', {{ $laundry->harga }}, document.getElementById('laundry{{ $laundry->id }}').value)">
-                                                                                    <i class="bi bi-cart-plus me-1"></i> Tambah
+                                                                                    class="btn btn-outline-info btn-sm w-100 py-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#detailLaundry{{ $laundry->id }}">
+                                                                                    Lihat Detail
                                                                                 </button>
-
+                                                                            </div>
+                                                                            <div class="card-body d-flex flex-column p-3">
+                                                                                <div class="text-center mb-2">
+                                                                                    <h6 class="card-title fw-bold mb-1">
+                                                                                        {{ $laundry->nama_paket }}
+                                                                                    </h6>
+                                                                                    <p class="card-text text-primary fw-semibold mb-2">
+                                                                                        Rp {{ number_format($laundry->harga, 0, ',', '.') }}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="mt-auto">
+                                                                                    <div class="d-flex justify-content-center align-items-center mb-2">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-sm btn-outline-secondary px-2"
+                                                                                            onclick="decreaseQuantity('laundry{{ $laundry->id }}')">-</button>
+                                                                                        <input type="number"
+                                                                                            id="laundry{{ $laundry->id }}"
+                                                                                            class="form-control form-control-sm mx-2 text-center"
+                                                                                            value="0" min="0" style="width: 50px;">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-sm btn-outline-secondary px-2"
+                                                                                            onclick="increaseQuantity('laundry{{ $laundry->id }}')">+</button>
+                                                                                    </div>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary btn-sm w-100 py-1 mb-2"
+                                                                                        onclick="addToCart('laundry', {{ $laundry->id }}, '{{ $laundry->nama_paket }}', {{ $laundry->harga }}, document.getElementById('laundry{{ $laundry->id }}').value)">
+                                                                                        <i class="bi bi-cart-plus me-1"></i> Tambah
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-
-                                                                <!-- Modal Laundry -->
-                                                                <div class="modal fade" id="detailLaundry{{ $laundry->id }}"
-                                                                    tabindex="-1" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content rounded-3 shadow">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">
-                                                                                    {{ $laundry->nama_paket }}</h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/300' }}"
-                                                                                    class="img-fluid mb-3 rounded"
-                                                                                    alt="{{ $laundry->nama_paket }}">
-                                                                                <p><strong>Harga:</strong> Rp
-                                                                                    {{ number_format($laundry->harga, 0, ',', '.') }}
-                                                                                </p>
-                                                                                <p><strong>Status:</strong>
-                                                                                    {{ ucfirst($laundry->status) }}</p>
-                                                                                <p><strong>Jenis:</strong>
-                                                                                    {{ $laundry->jenis ?? '-' }}</p>
-                                                                                <p><strong>Periode:</strong>
-                                                                                    {{ $laundry->periode ? $laundry->periode . ' hari' : '-' }}
-                                                                                </p>
-                                                                                <p><strong>Deskripsi:</strong><br>{{ $laundry->deskripsi ?? 'Tidak ada deskripsi' }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Tutup</button>
+                                            
+                                                                    <!-- Modal Laundry -->
+                                                                    <div class="modal fade" id="detailLaundry{{ $laundry->id }}" tabindex="-1" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content rounded-3 shadow">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title">{{ $laundry->nama_paket }}</h5>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/300' }}"
+                                                                                        class="img-fluid mb-3 rounded"
+                                                                                        alt="{{ $laundry->nama_paket }}">
+                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($laundry->harga, 0, ',', '.') }}</p>
+                                                                                    <p><strong>Status:</strong> {{ ucfirst($laundry->status) }}</p>
+                                                                                    <p><strong>Jenis:</strong> {{ $laundry->jenis ?? '-' }}</p>
+                                                                                    <p><strong>Periode:</strong> {{ $laundry->periode ? $laundry->periode . ' hari' : '-' }}</p>
+                                                                                    <p><strong>Deskripsi:</strong><br>{{ $laundry->deskripsi ?? 'Tidak ada deskripsi' }}</p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            @endforeach
-                                                        @else
-                                                            <p class="text-center">Belum ada paket laundry.</p>
-                                                        @endif
+                                                                @endforeach
+                                                            @else
+                                                                <p class="text-center">Belum ada paket laundry.</p>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-
-
+                                            
                                                 {{-- ================== TAB HOLIDAY ================== --}}
                                                 <div class="tab-pane fade" id="holiday" role="tabpanel">
-                                                    <div class="row">
-                                                        @if (isset($holiday_packages) && count($holiday_packages) > 0)
-                                                            @foreach ($holiday_packages as $holiday)
-                                                                <div class="col-md-4 mb-4">
-                                                                    <div class="card h-100 service-card">
-                                                                        <div class="text-center p-3">
-                                                                            <img src="{{ $holiday->gambar_cover ? asset('storage/' . $holiday->gambar_cover) : 'https://via.placeholder.com/150' }}"
-                                                                                alt="{{ $holiday->nama_paket }}"
-                                                                                class="img-fluid rounded"
-                                                                                style="height: 150px; object-fit: cover;">
-                                                                            <button type="button"
-                                                                                class="btn btn-outline-info btn-sm w-100 py-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#detailHoliday{{ $holiday->id }}">
-                                                                                Lihat Detail
-                                                                            </button>
-                                                                        </div>
-
-                                                                        <div class="card-body d-flex flex-column p-3">
-                                                                            <div class="text-center mb-2">
-                                                                                <h6 class="card-title fw-bold mb-1">
-                                                                                    {{ $holiday->nama_paket }}</h6>
-                                                                                <p
-                                                                                    class="card-text text-primary fw-semibold mb-2">
-                                                                                    Rp
-                                                                                    {{ number_format($holiday->harga, 0, ',', '.') }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="mt-auto">
-                                                                                <div
-                                                                                    class="d-flex justify-content-center align-items-center mb-2">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-sm btn-outline-secondary px-2"
-                                                                                        onclick="decreaseQuantity('holiday{{ $holiday->id }}')">-</button>
-                                                                                    <input type="number"
-                                                                                        id="holiday{{ $holiday->id }}"
-                                                                                        class="form-control form-control-sm mx-2 text-center"
-                                                                                        value="0" min="0" style="width: 50px;">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-sm btn-outline-secondary px-2"
-                                                                                        onclick="increaseQuantity('holiday{{ $holiday->id }}')">+</button>
-                                                                                </div>
+                                                    <div class="scroll-container">
+                                                        <div class="d-flex flex-nowrap">
+                                                            @if (isset($holiday_packages) && count($holiday_packages) > 0)
+                                                                @foreach ($holiday_packages as $holiday)
+                                                                    <div class="card me-3" style="min-width: 220px;">
+                                                                        <div class="card-header bg-light">
+                                                                            <div class="card">
+                                                                                <img src="{{ $holiday->gambar_cover ? asset('storage/' . $holiday->gambar_cover) : 'https://via.placeholder.com/150' }}"
+                                                                                    alt="{{ $holiday->nama_paket }}"
+                                                                                    class="img-fluid rounded"
+                                                                                    style="height: 150px; object-fit: cover;">
                                                                                 <button type="button"
-                                                                                    class="btn btn-primary btn-sm w-100 py-1 mb-2"
-                                                                                    onclick="addToCart('holiday', {{ $holiday->id }}, '{{ $holiday->nama_paket }}', {{ $holiday->harga }}, document.getElementById('holiday{{ $holiday->id }}').value)">
-                                                                                    <i class="bi bi-cart-plus me-1"></i> Tambah
+                                                                                    class="btn btn-outline-info btn-sm w-100 py-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#detailHoliday{{ $holiday->id }}">
+                                                                                    Lihat Detail
                                                                                 </button>
-
+                                                                            </div>
+                                                                            <div class="card-body d-flex flex-column p-3">
+                                                                                <div class="text-center mb-2">
+                                                                                    <h6 class="card-title fw-bold mb-1">
+                                                                                        {{ $holiday->nama_paket }}
+                                                                                    </h6>
+                                                                                    <p class="card-text text-primary fw-semibold mb-2">
+                                                                                        Rp {{ number_format($holiday->harga, 0, ',', '.') }}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="mt-auto">
+                                                                                    <div class="d-flex justify-content-center align-items-center mb-2">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-sm btn-outline-secondary px-2"
+                                                                                            onclick="decreaseQuantity('holiday{{ $holiday->id }}')">-</button>
+                                                                                        <input type="number"
+                                                                                            id="holiday{{ $holiday->id }}"
+                                                                                            class="form-control form-control-sm mx-2 text-center"
+                                                                                            value="0" min="0" style="width: 50px;">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-sm btn-outline-secondary px-2"
+                                                                                            onclick="increaseQuantity('holiday{{ $holiday->id }}')">+</button>
+                                                                                    </div>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary btn-sm w-100 py-1 mb-2"
+                                                                                        onclick="addToCart('holiday', {{ $holiday->id }}, '{{ $holiday->nama_paket }}', {{ $holiday->harga }}, document.getElementById('holiday{{ $holiday->id }}').value)">
+                                                                                        <i class="bi bi-cart-plus me-1"></i> Tambah
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-
-                                                                <!-- Modal Holiday -->
-                                                                <div class="modal fade" id="detailHoliday{{ $holiday->id }}"
-                                                                    tabindex="-1" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content rounded-3 shadow">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">
-                                                                                    {{ $holiday->nama_paket }}</h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <img src="{{ $holiday->gambar_cover ? asset('storage/' . $holiday->gambar_cover) : 'https://via.placeholder.com/300' }}"
-                                                                                    class="img-fluid mb-3 rounded"
-                                                                                    alt="{{ $holiday->nama_paket }}">
-                                                                                <p><strong>Harga:</strong> Rp
-                                                                                    {{ number_format($holiday->harga, 0, ',', '.') }}
-                                                                                </p>
-                                                                                <p><strong>Status:</strong>
-                                                                                    {{ ucfirst($holiday->status) }}</p>
-                                                                                <p><strong>Deskripsi:</strong><br>{{ $holiday->deskripsi ?? 'Tidak ada deskripsi' }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Tutup</button>
+                                            
+                                                                    <!-- Modal Holiday -->
+                                                                    <div class="modal fade" id="detailHoliday{{ $holiday->id }}" tabindex="-1" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content rounded-3 shadow">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title">{{ $holiday->nama_paket }}</h5>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <img src="{{ $holiday->gambar_cover ? asset('storage/' . $holiday->gambar_cover) : 'https://via.placeholder.com/300' }}"
+                                                                                        class="img-fluid mb-3 rounded"
+                                                                                        alt="{{ $holiday->nama_paket }}">
+                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($holiday->harga, 0, ',', '.') }}</p>
+                                                                                    <p><strong>Status:</strong> {{ ucfirst($holiday->status) }}</p>
+                                                                                    <p><strong>Deskripsi:</strong><br>{{ $holiday->deskripsi ?? 'Tidak ada deskripsi' }}</p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            @endforeach
-                                                        @else
-                                                            <p class="text-center">Belum ada paket holiday.</p>
-                                                        @endif
+                                                                @endforeach
+                                                            @else
+                                                                <p class="text-center">Belum ada paket holiday.</p>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-
                                             </div>
-
-                                            {{-- Cart Tab --}}
+                                                        {{-- Cart Tab --}}
                                             <div class="tab-pane fade" id="cart" role="tabpanel">
                                                 <div class="card">
                                                     <div class="card-header bg-light">
@@ -568,6 +533,18 @@
 
 
                                             <style>
+                                                .scroll-container {
+                                                        overflow-x: auto;
+                                                        padding-bottom: 10px; /* biar scroll bar tidak terlalu mepet */
+                                                    }
+                                                    .scroll-container::-webkit-scrollbar {
+                                                        height: 8px;
+                                                    }
+                                                    .scroll-container::-webkit-scrollbar-thumb {
+                                                        background: #ccc;
+                                                        border-radius: 4px;
+                                                    }
+
                                                 .service-card {
                                                     transition: transform 0.2s, box-shadow 0.2s;
                                                     border-radius: 12px;
