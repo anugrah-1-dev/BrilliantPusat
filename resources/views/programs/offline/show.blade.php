@@ -317,8 +317,7 @@
                                                                                     <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/300' }}"
                                                                                         class="img-fluid mb-3 rounded"
                                                                                         alt="{{ $catering->nama_paket }}">
-                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($catering->harga, 0, ',', '.') }}</p>
-                                                                                    <p><strong>Status:</strong> {{ ucfirst($catering->status) }}</p>
+                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($catering->harga, 0, ',', '.') }}</p>                                                                                    <p><strong>Periode:</strong> {{ $catering->periode ? $catering->periode . ' hari' : '-' }}</p>
                                                                                     <p><strong>Deskripsi:</strong><br>{{ $catering->deskripsi ?? 'Tidak ada deskripsi' }}</p>
                                                                                 </div>
                                                                                 <div class="modal-footer">
@@ -399,9 +398,7 @@
                                                                                     <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/300' }}"
                                                                                         class="img-fluid mb-3 rounded"
                                                                                         alt="{{ $laundry->nama_paket }}">
-                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($laundry->harga, 0, ',', '.') }}</p>
-                                                                                    <p><strong>Status:</strong> {{ ucfirst($laundry->status) }}</p>
-                                                                                    <p><strong>Jenis:</strong> {{ $laundry->jenis ?? '-' }}</p>
+                                                                                    <p><strong>Harga:</strong> Rp {{ number_format($laundry->harga, 0, ',', '.') }}</p>                                                                                    <p><strong>Jenis:</strong> {{ $laundry->jenis ?? '-' }}</p>
                                                                                     <p><strong>Periode:</strong> {{ $laundry->periode ? $laundry->periode . ' hari' : '-' }}</p>
                                                                                     <p><strong>Deskripsi:</strong><br>{{ $laundry->deskripsi ?? 'Tidak ada deskripsi' }}</p>
                                                                                 </div>
@@ -484,8 +481,9 @@
                                                                                         class="img-fluid mb-3 rounded"
                                                                                         alt="{{ $holiday->nama_paket }}">
                                                                                     <p><strong>Harga:</strong> Rp {{ number_format($holiday->harga, 0, ',', '.') }}</p>
-                                                                                    <p><strong>Status:</strong> {{ ucfirst($holiday->status) }}</p>
+                                                                                    <p><strong>Durasi:</strong> {{ $holiday->durasi }} Hari</p>
                                                                                     <p><strong>Deskripsi:</strong><br>{{ $holiday->deskripsi ?? 'Tidak ada deskripsi' }}</p>
+                                                                                    {{-- <p><strong>Fasilitas:</strong><br>{!! $holiday->fasilitas ?? 'Tidak ada fasilitas tambahan' !!}</p> --}}
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                     <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
