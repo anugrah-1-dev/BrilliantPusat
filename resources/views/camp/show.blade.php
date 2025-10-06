@@ -87,7 +87,7 @@
             <h1 class="display-4 fw-bold text-dark mb-3">{{ $program->nama }}</h1>
 
 
-            <p class="lead text-muted mb-3">Choose your program duration and fill out the registration form</p>
+            <p class="lead text-muted mb-3">Pilih Durasi programmu dan isi formulir pendaftaran Camp Yang kamu pilih</p>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal">
                 Lihat Tutorial Pendaftaran Camp BIE+
             </button>
@@ -409,7 +409,7 @@
         <!-- Registration Form Section -->
         <div class="card border-0 shadow-sm mb-4 mb-lg-5">
             <div class="card-header bg-primary text-white py-3">
-                <h3 class="fw-bold mb-0 text-center">Camp Registration Form</h3>
+                <h3 class="fw-bold mb-0 text-center">Formulir Registrasi Camp BIEPLUS</h3>
             </div>
             <div class="card-body p-3 p-lg-4">
 
@@ -419,7 +419,7 @@
 
                     <div class="row g-3 mb-4">
                         <div class="col-12 col-md-6">
-                            <label for="nama_lengkap" class="form-label fw-semibold">Full Name</label>
+                            <label for="nama_lengkap" class="form-label fw-semibold">Nama Lengkap</label>
                             <input type="text" name="nama_lengkap" class="form-control form-control-lg" required>
                         </div>
                         <div class="col-12 col-md-6">
@@ -427,11 +427,11 @@
                             <input type="email" name="email" class="form-control form-control-lg" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="no_hp" class="form-label fw-semibold">Phone Number</label>
+                            <label for="no_hp" class="form-label fw-semibold">No HP</label>
                             <input type="text" name="no_hp" class="form-control form-control-lg" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="asal_kota" class="form-label fw-semibold">City of Origin</label>
+                            <label for="asal_kota" class="form-label fw-semibold">Alamat</label>
                             <input type="text" id="asal_kota" name="asal_kota" class="form-control form-control-lg"
                                 required>
 
@@ -440,9 +440,9 @@
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label for="gender" class="form-label fw-semibold">Gender</label>
+                            <label for="gender" class="form-label fw-semibold">Jenis Kelamin</label>
                             <select name="gender" id="gender" class="form-select form-select-lg" required>
-                                <option value="">-- Select Gender --</option>
+                                <option value="">-- Pilih Jenis Kelamin--</option>
                                 <option value="putra">Putra</option>
                                 <option value="putri">Putri</option>
                             </select>
@@ -453,9 +453,9 @@
                         @endphp
 
                         <div class="col-12 col-md-6">
-                            <label for="period_id" class="form-label fw-semibold">Select Period</label>
+                            <label for="period_id" class="form-label fw-semibold">Periode </label>
                             <select name="period_id" class="form-select form-select-lg" required>
-                                <option value="">-- Select Period --</option>
+                                <option value="">-- Pilih Periode --</option>
                                 @foreach ($periods as $period)
                                     @php
                                         $periodDate = \Carbon\Carbon::parse($period->date)->toDateString();
@@ -528,32 +528,36 @@
                             </script>
 
                             <div class="col-12">
-                                <label class="form-label fw-semibold d-block mb-2">Package Duration</label>
+                                <label class="form-label fw-semibold d-block mb-2">Paket Durasi</label>
                                 <div class="duration-options-container">
                                     @php
                                         $durasiOptions = [
                                             'perhari' => [
-                                                'label' => 'Per Day',
+                                                'label' => 'Per Hari',
                                                 'harga' => $program->harga_perhari,
                                             ],
                                             'satu_minggu' => [
-                                                'label' => '1 Week',
+                                                'label' => '1 Minggu',
                                                 'harga' => $program->harga_satu_minggu,
                                             ],
                                             'dua_minggu' => [
-                                                'label' => '2 Weeks',
+                                                'label' => '2 Minggu',
+                                                'harga' => $program->harga_dua_minggu,
+                                            ],
+                                            'tiga_minggu' => [
+                                                'label' => '3 Minggu',
                                                 'harga' => $program->harga_dua_minggu,
                                             ],
                                             'satu_bulan' => [
-                                                'label' => '1 Month',
+                                                'label' => '1 Bulan',
                                                 'harga' => $program->harga_satu_bulan,
                                             ],
                                             'dua_bulan' => [
-                                                'label' => '2 Months',
+                                                'label' => '2 Bulan',
                                                 'harga' => $program->harga_dua_bulan,
                                             ],
                                             'tiga_bulan' => [
-                                                'label' => '3 Months',
+                                                'label' => '3 Bulan',
                                                 'harga' => $program->harga_tiga_bulan,
                                             ],
                                           
@@ -580,7 +584,7 @@
 
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary btn-lg px-4 px-lg-5 py-3 fw-semibold">
-                                <i class="fas fa-arrow-right me-2"></i> Proceed to Room Selection
+                                <i class="fas fa-arrow-right me-2"></i> Proses Untuk Pemilihan Kamar
                             </button>
                         </div>
                 </form>

@@ -23,6 +23,7 @@ class RoomController extends Controller
             'perhari' => 1,
             'satu_minggu' => 7,
             'dua_minggu' => 14,
+            'tiga_minggu' => 21,
             'satu_bulan' => 30,
             'dua_bulan' => 60,
             'tiga_bulan' => 90,
