@@ -47,7 +47,7 @@ class PendaftranCampController extends Controller
             'no_hp'          => 'required|string|max:20',
             'asal_kota'      => 'required|string|max:100',
             'period_id'      => 'required|exists:periods,id',
-            'durasi_paket'   => 'required|in:perhari,satu_minggu,dua_minggu,satu_bulan,dua_bulan,tiga_bulan,enam_bulan,satu_tahun',
+            'durasi_paket'   => 'required|in:perhari,satu_minggu,dua_minggu,tiga_minggu,satu_bulan,dua_bulan,tiga_bulan,enam_bulan,satu_tahun',
             'gender'         => 'required|in:putra,putri',
             'payment_type' => 'required|in:tunai,nontunai',
             'bank_id'      => 'nullable|required_if:payment_type,nontunai|exists:banks,id',
