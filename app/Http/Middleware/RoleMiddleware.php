@@ -9,8 +9,10 @@ class RoleMiddleware
 {
     public function handle($request, Closure $next, $role)
     {
-        if (!Auth::check() || !$request->user()->hasRole($role)) {
-            abort(403, 'Akses ditolak. Kamu bukan ' . $role . '.');
+        $roles = explode('|', $role);
+
+        if (!Auth::check() || !$request->user()->hasAnyRole($roles)) {
+            abort(403, 'Akses ditolak.');
         }
 
         return $next($request);
