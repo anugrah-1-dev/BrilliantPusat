@@ -880,6 +880,11 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                     behavior: 'smooth'
                 });
             }
+
+            function slideGalleryGrid(direction) {
+                const slider = document.getElementById('gallerySlider');
+                slider.scrollBy({ left: 320 * direction, behavior: 'smooth' });
+            }
         </script>
 
 
@@ -934,6 +939,127 @@ document.querySelectorAll('.program1-card').forEach(function(card){
         </div> --}}
 
         <link rel="stylesheet" href="{{ asset('css/sosmed.css') }}">
+
+        {{-- ===== GALERI ERFAN ===== --}}
+        <section id="galeri-erfan" class="gallery" style="background: #fffbf0;">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">GALERI ERFAN</h2>
+                <p class="section-subtitle text-center mb-4">
+                    Dokumentasi kegiatan dan momen-momen bersama Erfan.
+                </p>
+
+                @if($galleriesErfan->isNotEmpty())
+                <div class="gallery-slider-wrapper">
+                    <button class="gallery-nav left" onclick="slideErfanGrid(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
+                    <div class="gallery-scroll-outer">
+                        <div class="gallery-scroll-inner" id="erfanSlider">
+                            @php $erfanIdx = 0; @endphp
+                            @foreach ($galleriesErfan as $gallery)
+                                @if ($gallery->images->isNotEmpty())
+                                    @php
+                                        $firstMedia = $gallery->images->first();
+                                        $thumbSrc = null;
+                                        $isVideoThumb = false;
+                                        if ($firstMedia->type === 'video') {
+                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
+                                            $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/hqdefault.jpg' : null;
+                                            $isVideoThumb = true;
+                                        } else {
+                                            $thumbSrc = asset('storage/' . $firstMedia->image_path);
+                                        }
+                                    @endphp
+                                    <div class="gallery-frame text-center" data-index="{{ $erfanIdx }}"
+                                        data-aos="fade-up" data-aos-delay="{{ 100 * ($erfanIdx + 1) }}">
+                                        <div style="position:relative; display:inline-block; width:100%;">
+                                            @if ($thumbSrc)
+                                                <img src="{{ $thumbSrc }}"
+                                                    alt="{{ $gallery->title }}" class="gallery-thumbnail"
+                                                    onclick="openErfanModal({{ $gallery->id }})">
+                                            @endif
+                                            @if ($isVideoThumb)
+                                                <div onclick="openErfanModal({{ $gallery->id }})"
+                                                    style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); cursor:pointer; background:rgba(0,0,0,0.5); border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">
+                                                    <i class="fas fa-play text-white" style="font-size:20px; margin-left:4px;"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="gallery-caption">
+                                            <h5>{{ $gallery->title }}</h5>
+                                            <p>{{ Str::limit($gallery->deskripsi ?? '', 50) }}</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Modal per galeri Erfan --}}
+                                    <div id="erfan-modal-{{ $gallery->id }}" class="gallery-modal">
+                                        <div class="modal-content">
+                                            <span class="close-btn"
+                                                onclick="closeErfanModal({{ $gallery->id }})">&times;</span>
+                                            <h3>{{ $gallery->title }}</h3>
+                                            <div class="modal-slider-wrapper">
+                                                <button class="nav-btn left"
+                                                    onclick="slideErfan({{ $gallery->id }}, -1)">&#8592;</button>
+                                                <div class="modal-slider" id="erfan-slider-{{ $gallery->id }}">
+                                                    @foreach ($gallery->images as $image)
+                                                        @if ($image->type === 'video' && $image->getYoutubeEmbedUrl())
+                                                            <div class="gallery-media-item">
+                                                                <iframe
+                                                                    src="{{ $image->getYoutubeEmbedUrl() }}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen
+                                                                    style="width:100%; height:400px; border-radius:8px;">
+                                                                </iframe>
+                                                            </div>
+                                                        @elseif ($image->image_path)
+                                                            <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                alt="Foto Galeri Erfan">
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                                <button class="nav-btn right"
+                                                    onclick="slideErfan({{ $gallery->id }}, 1)">&#8594;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @php $erfanIdx++; @endphp
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <button class="gallery-nav right" onclick="slideErfanGrid(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                @else
+                    <p class="text-center text-muted">Belum ada galeri Erfan.</p>
+                @endif
+            </div>
+        </section>
+
+        <script>
+            function openErfanModal(id) {
+                document.getElementById('erfan-modal-' + id).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeErfanModal(id) {
+                document.getElementById('erfan-modal-' + id).classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            function slideErfan(id, direction) {
+                const slider = document.getElementById('erfan-slider-' + id);
+                slider.scrollBy({ left: 300 * direction, behavior: 'smooth' });
+            }
+            function slideErfanGrid(direction) {
+                const slider = document.getElementById('erfanSlider');
+                slider.scrollBy({ left: 320 * direction, behavior: 'smooth' });
+            }
+        </script>
+        {{-- ===== END GALERI ERFAN ===== --}}
 
         <section id="sosmed" class="sosmed-section">
             <div class="container">

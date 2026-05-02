@@ -14,7 +14,18 @@ class Gallery extends Model
         'description',
         'event_date',
         'status',
+        'category',
     ];
+
+    public function scopeUmum($query)
+    {
+        return $query->where('category', 'umum');
+    }
+
+    public function scopeErfan($query)
+    {
+        return $query->where('category', 'erfan');
+    }
 
     // Relasi: satu gallery memiliki banyak gambar
     public function images()

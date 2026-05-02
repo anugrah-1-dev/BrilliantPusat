@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProgramCampController;
 use App\Http\Controllers\Admin\ProgramOfflineController;
 use App\Http\Controllers\Admin\ProgramOnlineController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\GalleryErfanController;
 use App\Http\Controllers\Admin\PendaftaranOnlineController;
 use App\Http\Controllers\Admin\PendaftaranOfflineController;
 use App\Http\Controllers\ProgramOfflinePublicController;
@@ -223,9 +224,13 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     //program online
     Route::resource('programs/online', ProgramOnlineController::class);
 
-    // gallery
+    // gallery umum
     Route::resource('galleries', GalleryController::class);
     Route::delete('galleries/images/{id}', [GalleryController::class, 'destroyImage'])->name('galleries.images.destroy');
+
+    // gallery erfan
+    Route::resource('galleries-erfan', GalleryErfanController::class)->names('galleries-erfan');
+    Route::delete('galleries-erfan/images/{id}', [GalleryErfanController::class, 'destroyImage'])->name('galleries-erfan.images.destroy');
 
     //program camp
     Route::resource('programs/camp', ProgramCampController::class)->names('programs.camp');

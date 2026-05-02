@@ -517,6 +517,12 @@
                     ],
 
                     [
+                        'text' => 'Galeri Erfan',
+                        'url'  => '/admin/galleries-erfan',
+                        'icon' => 'fas fa-star',
+                    ],
+
+                    [
                         'text' => 'Sosmed',
                         'url'  => '/admin/sosmed',
                         'icon' => 'fas fa-globe',

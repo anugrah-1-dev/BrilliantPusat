@@ -19,7 +19,8 @@ class LandingPageController extends Controller
     public function index()
     {
         $programs        = Program::orderBy('id', 'asc')->get();
-        $galleries       = Gallery::where('status', 1)->with('images')->latest()->get();
+        $galleries       = Gallery::umum()->where('status', 1)->with('images')->latest()->get();
+        $galleriesErfan  = Gallery::erfan()->where('status', 1)->with('images')->latest()->get();
         $offlinePrograms = ProgramOffline::where('is_active', 1)->latest()->get();
         $onlinePrograms  = ProgramOnline::where('is_active', 1)->latest()->get();
         $camps           = ProgramCamp::orderBy('id', 'asc')->get();
@@ -68,6 +69,7 @@ class LandingPageController extends Controller
             'onlinePrograms'  => $onlinePrograms,
             'programs'        => $programs,
             'galleries'       => $galleries,
+            'galleriesErfan'  => $galleriesErfan,
             'camps'           => $camps,
             'contactServices' => $contactServices,
             'groupedSosmed' => $groupedSosmed,
