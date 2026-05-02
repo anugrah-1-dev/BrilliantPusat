@@ -286,7 +286,7 @@
     </script>
 
 
-    {{-- âœ… Section "Tentang Kami" dengan animasi --}}
+    {{-- ✅ Section "Tentang Kami" dengan animasi --}}
     <section class="about-us-section" id="tentang" data-aos="fade-up">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <h2 class="about-section-title" data-aos="fade-up">TENTANG KAMI</h2>
@@ -730,7 +730,7 @@
 
                                 <ul class="list-unstyled">
                                     @foreach ($fasilitasList as $fasilitas)
-                                        <li>âœ… {{ $fasilitas }}</li>
+                                        <li>✅ {{ $fasilitas }}</li>
                                     @endforeach
                                 </ul>
 
@@ -743,8 +743,8 @@
                             <div class="promo-banner">
                                 <i class="fas fa-star"></i> Special Promo Available <i class="fas fa-fire"></i>
                             </div>
-                            <a href="{{ route('camps.show', $camp->slug) }}" class="btn-details">Lihat
-                                Selengkapnya â†’</a>
+                            <a href="{{ route('camp.show', $camp->slug) }}" class="btn-details">Lihat
+                                Selengkapnya →</a>
                         </div>
                     </div>
                     @empty
