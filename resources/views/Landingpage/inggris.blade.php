@@ -66,7 +66,13 @@
                         style="display: none;">
                         <div class="program-card">
                             <div class="program-card-image-wrapper">
-                                <img src="{{ asset('storage/' . $program->thumbnail) }}" class="program-card-img"
+                                @php
+                                    $thumb = $program->thumbnail;
+                                    $thumbUrl = $thumb
+                                        ? (str_starts_with($thumb, 'http') ? $thumb : asset('storage/' . $thumb))
+                                        : asset('asset/img/brilliant1.jpg');
+                                @endphp
+                                <img src="{{ $thumbUrl }}" class="program-card-img"
                                     alt="{{ $program->nama }}">
                                 @if ($program->is_active)
                                     <span class="badge bg-success program-badge">Available</span>
@@ -139,7 +145,13 @@
                         style="display: none;">
                         <div class="program-card">
                             <div class="program-card-image-wrapper">
-                                <img src="{{ asset('storage/' . $program->thumbnail) }}" class="program-card-img"
+                                @php
+                                    $thumb = $program->thumbnail;
+                                    $thumbUrl = $thumb
+                                        ? (str_starts_with($thumb, 'http') ? $thumb : asset('storage/' . $thumb))
+                                        : asset('asset/img/brilliant1.jpg');
+                                @endphp
+                                <img src="{{ $thumbUrl }}" class="program-card-img"
                                     alt="{{ $program->nama }}">
                                 @if ($program->is_active)
                                     <span class="badge bg-success program-badge">Available</span>
