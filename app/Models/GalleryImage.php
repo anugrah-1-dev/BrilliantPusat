@@ -22,6 +22,16 @@ class GalleryImage extends Model
         return $this->type === 'video';
     }
 
+    public function isLocalVideo(): bool
+    {
+        return $this->type === 'video' && !$this->video_url && $this->image_path;
+    }
+
+    public function isYoutubeVideo(): bool
+    {
+        return $this->type === 'video' && (bool) $this->video_url;
+    }
+
     public function getYoutubeEmbedUrl(): ?string
     {
         if (!$this->video_url) return null;

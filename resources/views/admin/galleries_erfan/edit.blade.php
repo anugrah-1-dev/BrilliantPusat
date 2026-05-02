@@ -48,6 +48,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Upload Video Baru <small class="text-muted">(opsional, maks 100MB/video, format: mp4, mov, avi, webm)</small></label>
+                    <input type="file" name="videos[]" class="form-control" multiple accept="video/*">
+                </div>
+
+                <div class="form-group">
                     <label>Tambah Link Video YouTube Baru <small class="text-muted">(opsional, satu link per baris)</small></label>
                     <textarea name="video_urls" class="form-control" rows="3"
                         placeholder="https://www.youtube.com/watch?v=xxxxx"></textarea>
@@ -71,7 +76,11 @@
                 @forelse ($gallery->images as $image)
                     <div class="col-md-3 mb-3">
                         <div class="card shadow-sm">
-                            @if ($image->type === 'video')
+                            @if ($image->isLocalVideo())
+                                <video class="card-img-top" style="height:140px; object-fit:cover;" controls>
+                                    <source src="{{ asset('storage/' . $image->image_path) }}">
+                                </video>
+                            @elseif ($image->isYoutubeVideo())
                                 <div class="bg-dark d-flex align-items-center justify-content-center"
                                     style="height:140px;">
                                     <div class="text-center text-white p-2">
@@ -86,7 +95,7 @@
                             @endif
                             <div class="card-body p-2 text-center">
                                 <span class="badge {{ $image->type === 'video' ? 'badge-danger' : 'badge-info' }} mb-1">
-                                    {{ $image->type === 'video' ? 'Video' : 'Foto' }}
+                                    {{ $image->isLocalVideo() ? 'Video (Lokal)' : ($image->isYoutubeVideo() ? 'Video (YouTube)' : 'Foto') }}
                                 </span>
                                 <button class="btn btn-sm btn-danger btn-block btn-delete-image"
                                     data-id="{{ $image->id }}"

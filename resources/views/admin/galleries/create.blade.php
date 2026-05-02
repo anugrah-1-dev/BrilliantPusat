@@ -47,6 +47,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="videos">Upload Video <small class="text-muted">(opsional, bisa lebih dari satu, maks 100MB/video, format: mp4, mov, avi, webm)</small></label>
+                    <input type="file" name="videos[]" class="form-control" multiple accept="video/*">
+                </div>
+
+                <div class="form-group">
                     <label for="video_urls">Link Video YouTube <small class="text-muted">(opsional, satu link per baris)</small></label>
                     <textarea name="video_urls" class="form-control" rows="4"
                         placeholder="https://www.youtube.com/watch?v=xxxxx&#10;https://youtu.be/xxxxx">{{ old('video_urls') }}</textarea>

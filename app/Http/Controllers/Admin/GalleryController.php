@@ -28,6 +28,7 @@ class GalleryController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'videos.*' => 'nullable|mimes:mp4,mov,avi,mkv,webm|max:102400',
             'video_urls' => 'nullable|string',
         ]);
 
@@ -45,6 +46,18 @@ class GalleryController extends Controller
                 $gallery->images()->create([
                     'type' => 'image',
                     'image_path' => $path,
+                ]);
+            }
+        }
+
+        // Upload file video
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $path = $video->store('galleries/videos', 'public');
+                $gallery->images()->create([
+                    'type' => 'video',
+                    'image_path' => $path,
+                    'video_url' => null,
                 ]);
             }
         }
@@ -87,6 +100,7 @@ class GalleryController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'videos.*' => 'nullable|mimes:mp4,mov,avi,mkv,webm|max:102400',
             'video_urls' => 'nullable|string',
         ]);
 
@@ -103,6 +117,18 @@ class GalleryController extends Controller
                 $gallery->images()->create([
                     'type' => 'image',
                     'image_path' => $path,
+                ]);
+            }
+        }
+
+        // Tambah file video baru jika ada
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $path = $video->store('galleries/videos', 'public');
+                $gallery->images()->create([
+                    'type' => 'video',
+                    'image_path' => $path,
+                    'video_url' => null,
                 ]);
             }
         }

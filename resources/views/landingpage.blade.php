@@ -785,8 +785,10 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                         $thumbSrc = null;
                                         $isVideoThumb = false;
                                         if ($firstMedia->type === 'video') {
-                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
-                                            $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/hqdefault.jpg' : null;
+                                            if ($firstMedia->video_url) {
+                                                preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
+                                                $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/hqdefault.jpg' : null;
+                                            }
                                             $isVideoThumb = true;
                                         } else {
                                             $thumbSrc = asset('storage/' . $firstMedia->image_path);
@@ -800,6 +802,13 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                 <img src="{{ $thumbSrc }}"
                                                     alt="{{ $gallery->title }}" class="gallery-thumbnail"
                                                     onclick="openGalleryModal({{ $gallery->id }})">
+                                            @elseif ($isVideoThumb)
+                                                {{-- Local video tanpa thumbnail --}}
+                                                <div onclick="openGalleryModal({{ $gallery->id }})"
+                                                    class="gallery-thumbnail d-flex align-items-center justify-content-center"
+                                                    style="cursor:pointer; background:#1e1e2e; height:200px; border-radius:10px;">
+                                                    <i class="fas fa-film" style="font-size:40px; color:#ccc;"></i>
+                                                </div>
                                             @endif
                                             @if ($isVideoThumb)
                                                 <div onclick="openGalleryModal({{ $gallery->id }})"
@@ -825,7 +834,7 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                     onclick="slideGallery({{ $gallery->id }}, -1)">&#8592;</button>
                                                 <div class="modal-slider" id="slider-{{ $gallery->id }}">
                                                     @foreach ($gallery->images as $image)
-                                                        @if ($image->type === 'video' && $image->getYoutubeEmbedUrl())
+                                                        @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
                                                             <div class="gallery-media-item">
                                                                 <iframe
                                                                     src="{{ $image->getYoutubeEmbedUrl() }}"
@@ -834,6 +843,13 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                                     allowfullscreen
                                                                     style="width:100%; height:400px; border-radius:8px;">
                                                                 </iframe>
+                                                            </div>
+                                                        @elseif ($image->isLocalVideo())
+                                                            <div class="gallery-media-item">
+                                                                <video controls style="width:100%; max-height:400px; border-radius:8px; background:#000;">
+                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                    Browser Anda tidak mendukung pemutaran video.
+                                                                </video>
                                                             </div>
                                                         @elseif ($image->image_path)
                                                             <img src="{{ asset('storage/' . $image->image_path) }}"
@@ -964,8 +980,10 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                         $thumbSrc = null;
                                         $isVideoThumb = false;
                                         if ($firstMedia->type === 'video') {
-                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
-                                            $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/hqdefault.jpg' : null;
+                                            if ($firstMedia->video_url) {
+                                                preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
+                                                $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/hqdefault.jpg' : null;
+                                            }
                                             $isVideoThumb = true;
                                         } else {
                                             $thumbSrc = asset('storage/' . $firstMedia->image_path);
@@ -978,6 +996,13 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                 <img src="{{ $thumbSrc }}"
                                                     alt="{{ $gallery->title }}" class="gallery-thumbnail"
                                                     onclick="openErfanModal({{ $gallery->id }})">
+                                            @elseif ($isVideoThumb)
+                                                {{-- Local video tanpa thumbnail --}}
+                                                <div onclick="openErfanModal({{ $gallery->id }})"
+                                                    class="gallery-thumbnail d-flex align-items-center justify-content-center"
+                                                    style="cursor:pointer; background:#1e1e2e; height:200px; border-radius:10px;">
+                                                    <i class="fas fa-film" style="font-size:40px; color:#ccc;"></i>
+                                                </div>
                                             @endif
                                             @if ($isVideoThumb)
                                                 <div onclick="openErfanModal({{ $gallery->id }})"
@@ -1004,7 +1029,7 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                     onclick="slideErfan({{ $gallery->id }}, -1)">&#8592;</button>
                                                 <div class="modal-slider" id="erfan-slider-{{ $gallery->id }}">
                                                     @foreach ($gallery->images as $image)
-                                                        @if ($image->type === 'video' && $image->getYoutubeEmbedUrl())
+                                                        @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
                                                             <div class="gallery-media-item">
                                                                 <iframe
                                                                     src="{{ $image->getYoutubeEmbedUrl() }}"
@@ -1013,6 +1038,13 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                                     allowfullscreen
                                                                     style="width:100%; height:400px; border-radius:8px;">
                                                                 </iframe>
+                                                            </div>
+                                                        @elseif ($image->isLocalVideo())
+                                                            <div class="gallery-media-item">
+                                                                <video controls style="width:100%; max-height:400px; border-radius:8px; background:#000;">
+                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                    Browser Anda tidak mendukung pemutaran video.
+                                                                </video>
                                                             </div>
                                                         @elseif ($image->image_path)
                                                             <img src="{{ asset('storage/' . $image->image_path) }}"
