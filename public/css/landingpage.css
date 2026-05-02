@@ -1460,20 +1460,37 @@ html {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    width: 100%;
 }
 
 .modal-slider {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    scroll-behavior: smooth;
-    max-width: 90%;
-    padding: 10px 0;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
 }
 
-.modal-slider img {
-    max-height: 300px;
+.slide-track {
+    display: flex;
+    transition: transform 0.4s ease;
+    will-change: transform;
+}
+
+.slide-item {
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.slide-item img {
+    max-height: 65vh;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: 8px;
+    display: block;
 }
 
 .nav-btn {

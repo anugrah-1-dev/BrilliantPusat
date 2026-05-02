@@ -833,29 +833,29 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                 <button class="nav-btn left"
                                                     onclick="slideGallery({{ $gallery->id }}, -1)">&#8592;</button>
                                                 <div class="modal-slider" id="slider-{{ $gallery->id }}">
-                                                    @foreach ($gallery->images as $image)
-                                                        @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
-                                                            <div class="gallery-media-item">
-                                                                <iframe
-                                                                    src="{{ $image->getYoutubeEmbedUrl() }}"
-                                                                    frameborder="0"
-                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                    allowfullscreen
-                                                                    style="width:100%; height:400px; border-radius:8px;">
-                                                                </iframe>
+                                                    <div class="slide-track">
+                                                        @foreach ($gallery->images as $image)
+                                                            <div class="slide-item">
+                                                                @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
+                                                                    <iframe
+                                                                        src="{{ $image->getYoutubeEmbedUrl() }}"
+                                                                        frameborder="0"
+                                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                        allowfullscreen
+                                                                        style="width:100%; height:400px; border-radius:8px;">
+                                                                    </iframe>
+                                                                @elseif ($image->isLocalVideo())
+                                                                    <video controls style="max-width:100%; max-height:65vh; border-radius:8px; background:#000;">
+                                                                        <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                        Browser Anda tidak mendukung pemutaran video.
+                                                                    </video>
+                                                                @elseif ($image->image_path)
+                                                                    <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                        alt="Foto Galeri">
+                                                                @endif
                                                             </div>
-                                                        @elseif ($image->isLocalVideo())
-                                                            <div class="gallery-media-item">
-                                                                <video controls style="width:100%; max-height:400px; border-radius:8px; background:#000;">
-                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
-                                                                    Browser Anda tidak mendukung pemutaran video.
-                                                                </video>
-                                                            </div>
-                                                        @elseif ($image->image_path)
-                                                            <img src="{{ asset('storage/' . $image->image_path) }}"
-                                                                alt="Foto Galeri">
-                                                        @endif
-                                                    @endforeach
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                                 <button class="nav-btn right"
                                                     onclick="slideGallery({{ $gallery->id }}, 1)">&#8594;</button>
@@ -887,14 +887,16 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                 document.body.style.overflow = 'auto';
             }
 
-            // Geser slider ke kiri atau kanan
+            // Geser slider ke kiri atau kanan (transform-based carousel)
+            const gallerySlidePos = {};
             function slideGallery(id, direction) {
                 const slider = document.getElementById('slider-' + id);
-                const scrollAmount = 300; // px
-                slider.scrollBy({
-                    left: scrollAmount * direction,
-                    behavior: 'smooth'
-                });
+                const track = slider.querySelector('.slide-track');
+                const items = track.querySelectorAll('.slide-item');
+                if (!items.length) return;
+                if (gallerySlidePos[id] === undefined) gallerySlidePos[id] = 0;
+                gallerySlidePos[id] = (gallerySlidePos[id] + direction + items.length) % items.length;
+                track.style.transform = `translateX(-${gallerySlidePos[id] * 100}%)`;
             }
 
             function slideGalleryGrid(direction) {
@@ -1028,29 +1030,29 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                                                 <button class="nav-btn left"
                                                     onclick="slideErfan({{ $gallery->id }}, -1)">&#8592;</button>
                                                 <div class="modal-slider" id="erfan-slider-{{ $gallery->id }}">
-                                                    @foreach ($gallery->images as $image)
-                                                        @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
-                                                            <div class="gallery-media-item">
-                                                                <iframe
-                                                                    src="{{ $image->getYoutubeEmbedUrl() }}"
-                                                                    frameborder="0"
-                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                    allowfullscreen
-                                                                    style="width:100%; height:400px; border-radius:8px;">
-                                                                </iframe>
+                                                    <div class="slide-track">
+                                                        @foreach ($gallery->images as $image)
+                                                            <div class="slide-item">
+                                                                @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
+                                                                    <iframe
+                                                                        src="{{ $image->getYoutubeEmbedUrl() }}"
+                                                                        frameborder="0"
+                                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                        allowfullscreen
+                                                                        style="width:100%; height:400px; border-radius:8px;">
+                                                                    </iframe>
+                                                                @elseif ($image->isLocalVideo())
+                                                                    <video controls style="max-width:100%; max-height:65vh; border-radius:8px; background:#000;">
+                                                                        <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                        Browser Anda tidak mendukung pemutaran video.
+                                                                    </video>
+                                                                @elseif ($image->image_path)
+                                                                    <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                        alt="Foto Galeri Erfan">
+                                                                @endif
                                                             </div>
-                                                        @elseif ($image->isLocalVideo())
-                                                            <div class="gallery-media-item">
-                                                                <video controls style="width:100%; max-height:400px; border-radius:8px; background:#000;">
-                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
-                                                                    Browser Anda tidak mendukung pemutaran video.
-                                                                </video>
-                                                            </div>
-                                                        @elseif ($image->image_path)
-                                                            <img src="{{ asset('storage/' . $image->image_path) }}"
-                                                                alt="Foto Galeri Erfan">
-                                                        @endif
-                                                    @endforeach
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                                 <button class="nav-btn right"
                                                     onclick="slideErfan({{ $gallery->id }}, 1)">&#8594;</button>
@@ -1082,9 +1084,15 @@ document.querySelectorAll('.program1-card').forEach(function(card){
                 document.getElementById('erfan-modal-' + id).classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
+            const erfanSlidePos = {};
             function slideErfan(id, direction) {
                 const slider = document.getElementById('erfan-slider-' + id);
-                slider.scrollBy({ left: 300 * direction, behavior: 'smooth' });
+                const track = slider.querySelector('.slide-track');
+                const items = track.querySelectorAll('.slide-item');
+                if (!items.length) return;
+                if (erfanSlidePos[id] === undefined) erfanSlidePos[id] = 0;
+                erfanSlidePos[id] = (erfanSlidePos[id] + direction + items.length) % items.length;
+                track.style.transform = `translateX(-${erfanSlidePos[id] * 100}%)`;
             }
             function slideErfanGrid(direction) {
                 const slider = document.getElementById('erfanSlider');
