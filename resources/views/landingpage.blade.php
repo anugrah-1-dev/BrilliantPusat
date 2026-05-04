@@ -797,7 +797,6 @@
                                     }
                                 @endphp
                                 <div class="gallery-frame" data-index="{{ $index }}"
-                                    data-aos="fade-up" data-aos-delay="{{ min(100 * ($index + 1), 600) }}"
                                     onclick="openGalleryModal({{ $gallery->id }})">
                                     @if ($thumbSrc)
                                         <img src="{{ $thumbSrc }}" alt="{{ $gallery->title }}" class="gallery-thumbnail">
@@ -887,7 +886,6 @@
                                     }
                                 @endphp
                                 <div class="gallery-frame" data-index="{{ $erfanIdx }}"
-                                    data-aos="fade-up" data-aos-delay="{{ min(100 * ($erfanIdx + 1), 600) }}"
                                     onclick="openErfanModal({{ $gallery->id }})">
                                     @if ($thumbSrc)
                                         <img src="{{ $thumbSrc }}" alt="{{ $gallery->title }}" class="gallery-thumbnail">
