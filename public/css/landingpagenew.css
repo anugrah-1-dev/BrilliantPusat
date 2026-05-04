@@ -1242,6 +1242,63 @@ body {
     animation-delay: 0.35s;
 }
 
+/* ===== BIE Gallery Carousel ===== */
+.gallery-carousel-outer {
+    position: relative;
+    padding: 0 52px;
+}
+
+.gallery-carousel-wrap {
+    overflow: hidden;
+}
+
+.gallery-carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-carousel-track .gallery-frame {
+    flex: 0 0 calc(33.333% - 1rem);
+    min-width: 0;
+    animation: none;
+}
+
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(106, 27, 154, 0.85);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+    transition:
+        background 0.2s,
+        transform 0.2s;
+    line-height: 1;
+}
+
+.carousel-nav-btn:hover {
+    background: rgba(106, 27, 154, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+    left: 0;
+}
+.carousel-next {
+    right: 0;
+}
+
 /* Gallery Frame */
 .gallery-frame {
     position: relative;
@@ -1528,6 +1585,10 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .gallery-carousel-track .gallery-frame {
+        flex: 0 0 calc(50% - 0.75rem);
+    }
+
     .modal-content {
         max-width: 90%;
         padding: 2rem;
@@ -1585,6 +1646,14 @@ body {
 
     .gallery-grid {
         grid-template-columns: 1fr;
+    }
+
+    .gallery-carousel-track .gallery-frame {
+        flex: 0 0 100%;
+    }
+
+    .gallery-carousel-outer {
+        padding: 0 42px;
     }
 
     .modal-slider-wrapper {

@@ -776,7 +776,10 @@
                 {{-- ===== Galeri BIE ===== --}}
                 <div id="tab-bie" class="gallery-tab-pane">
                     <h4 class="gallery-section-label"><i class="fas fa-images me-2"></i>Galeri BIE</h4>
-                    <div class="gallery-grid">
+                    <div class="gallery-carousel-outer" id="bie-carousel">
+                        <button class="carousel-nav-btn carousel-prev" id="bie-prev">&#8592;</button>
+                        <div class="gallery-carousel-wrap" id="bie-wrap">
+                            <div class="gallery-carousel-track" id="bie-track">
                         @php $index = 0; @endphp
                         @foreach ($galleries as $gallery)
                             @if ($gallery->images->isNotEmpty())
@@ -816,7 +819,10 @@
                                 @php $index++; @endphp
                             @endif
                         @endforeach
-                    </div>
+                            </div>{{-- end .gallery-carousel-track --}}
+                        </div>{{-- end .gallery-carousel-wrap --}}
+                        <button class="carousel-nav-btn carousel-next" id="bie-next">&#8594;</button>
+                    </div>{{-- end .gallery-carousel-outer --}}
                     {{-- Modal BIE di luar gallery-grid --}}
                     @foreach ($galleries as $gallery)
                         @if ($gallery->images->isNotEmpty())
@@ -1018,6 +1024,63 @@
                 const slider = document.getElementById('erfanSlider');
                 if (slider) slider.scrollBy({ left: 320 * direction, behavior: 'smooth' });
             }
+
+            // ===== BIE Gallery Carousel Auto-Slide =====
+            (function () {
+                const track   = document.getElementById('bie-track');
+                const wrap    = document.getElementById('bie-wrap');
+                const prevBtn = document.getElementById('bie-prev');
+                const nextBtn = document.getElementById('bie-next');
+                if (!track || !wrap || !prevBtn || !nextBtn) return;
+
+                const frames = Array.from(track.querySelectorAll('.gallery-frame'));
+                const total  = frames.length;
+
+                // Jika ≤ 2 item, sembunyikan tombol – tidak perlu carousel
+                if (total <= 2) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    return;
+                }
+
+                let current = 0;
+                let autoTimer;
+
+                function getPerView() {
+                    if (window.innerWidth <= 480) return 1;
+                    if (window.innerWidth <= 1024) return 2;
+                    return 3;
+                }
+
+                function getStepPx() {
+                    const gap = parseFloat(getComputedStyle(track).gap) || 24;
+                    return frames[0].offsetWidth + gap;
+                }
+
+                function getMaxIndex() {
+                    return Math.max(0, total - getPerView());
+                }
+
+                function goTo(idx) {
+                    current = Math.max(0, Math.min(idx, getMaxIndex()));
+                    track.style.transform = 'translateX(-' + (current * getStepPx()) + 'px)';
+                }
+
+                function next() { goTo(current >= getMaxIndex() ? 0 : current + 1); }
+                function prev() { goTo(current <= 0 ? getMaxIndex() : current - 1); }
+
+                prevBtn.addEventListener('click', function (e) { e.stopPropagation(); prev(); resetAuto(); });
+                nextBtn.addEventListener('click', function (e) { e.stopPropagation(); next(); resetAuto(); });
+
+                function startAuto() { autoTimer = setInterval(next, 3500); }
+                function resetAuto() { clearInterval(autoTimer); startAuto(); }
+
+                wrap.addEventListener('mouseenter', function () { clearInterval(autoTimer); });
+                wrap.addEventListener('mouseleave', startAuto);
+                window.addEventListener('resize', function () { goTo(current); });
+
+                startAuto();
+            })();
         </script>
 
         </section>
