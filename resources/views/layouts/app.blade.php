@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('favicon-v2.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('asset/img/Inggris.png') }}" type="image/png">
 
 
     <title>{{ config('app.name', 'Briliant English Course') }}</title>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('css')
 
-    <link rel="icon" href="{{ asset('favicon-v2.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('asset/img/Inggris.png') }}" type="image/png">
 
 </head>
 
