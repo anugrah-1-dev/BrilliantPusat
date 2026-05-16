@@ -4,7 +4,7 @@
     const logo1URL = "{{ $navLogo1 && $navLogo1->image_path ? asset('storage/' . $navLogo1->image_path) : asset('asset/img/LogoWebBrillaintPare.png') }}";
     const logo2URL = "{{ $navLogo2 && $navLogo2->image_path ? asset('storage/' . $navLogo2->image_path) : asset('asset/img/LogoWebBrillaintPare.png') }}";
 </script>
-<script src="{{ asset('js/landingpage.js') }}"></script>
+<script src="{{ asset('js/landingpage.js') }}?v={{ filemtime(public_path('js/landingpage.js')) }}"></script>
 <!-- Navbar css-->
 <link rel="stylesheet" href="{{ asset('css/navbarblade.css') }}">
 
