@@ -32,8 +32,7 @@
                         value="{{ old('nama') }}" required />
 
                     <x-adminlte-input name="nomor" label="Nomor WhatsApp / HP" placeholder="Contoh: 08123456789"
-                        value="{{ old('nomor') }}" pattern="\d{10,15}" title="Minimal 10 digit dan maksimal 15 angka"
-                        required />
+                        value="{{ old('nomor') }}" required />
 
                     <div class="mt-3">
                         <x-adminlte-button type="submit" theme="primary" icon="fas fa-save" label="Simpan Kontak" />
