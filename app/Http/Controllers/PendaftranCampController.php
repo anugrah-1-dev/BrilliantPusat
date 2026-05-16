@@ -21,7 +21,7 @@ class PendaftranCampController extends Controller
      */
     public function showCampPublic(ProgramCamp $program)
     {
-        $periods = Period::all(); // bisa filter jika perlu hanya yang aktif
+        $periods = Period::orderBy('date')->get(); // bisa filter jika perlu hanya yang aktif
         return view('camp.show', compact('program', 'periods'));
     }
 
@@ -30,7 +30,7 @@ class PendaftranCampController extends Controller
      */
     public function showForm(ProgramCamp $program)
     {
-        $periods = Period::where('is_active', true)->get();
+        $periods = Period::where('is_active', true)->orderBy('date')->get();
         return view('camp.register', compact('program', 'periods'));
     }
 

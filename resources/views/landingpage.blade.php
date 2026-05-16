@@ -768,15 +768,10 @@
             <div class="container" data-aos="fade-up">
                 <h2 class="section-title">GALERI</h2>
                 <p class="section-subtitle text-center mb-4">
-                    Dokumentasi kegiatan dan momen-momen seru bersama Brilliant International Education PLUS dan Erfan.
+                    Dokumentasi kegiatan dan momen-momen seru bersama Brilliant International Education PLUS.
                 </p>
 
-                {{-- Tab buttons --}}
-
-                {{-- ===== Galeri BIE ===== --}}
-                <div id="tab-bie" class="gallery-tab-pane">
-                    <h4 class="gallery-section-label"><i class="fas fa-images me-2"></i>Galeri BIE</h4>
-                    <div class="gallery-carousel-outer" id="bie-carousel">
+                <div class="gallery-carousel-outer" id="bie-carousel">
                         <button class="carousel-nav-btn carousel-prev" id="bie-prev">&#8592;</button>
                         <div class="gallery-carousel-wrap" id="bie-wrap">
                             <div class="gallery-carousel-track" id="bie-track">
@@ -866,95 +861,6 @@
                             </div>
                         @endif
                     @endforeach
-                </div>
-                {{-- ===== Galeri Erfan ===== --}}
-                <div id="tab-erfan" class="gallery-tab-pane">
-                    @if($galleriesErfan->isNotEmpty())
-                    <h4 class="gallery-section-label"><i class="fas fa-star me-2"></i>Galeri Erfan</h4>
-                    <div class="gallery-grid">
-                        @php $erfanIdx = 0; @endphp
-                        @foreach ($galleriesErfan as $gallery)
-                            @if ($gallery->images->isNotEmpty())
-                                @php
-                                    $firstMedia = $gallery->images->first();
-                                    $thumbSrc = null;
-                                    $isVideoThumb = false;
-                                    if ($firstMedia->type === 'video') {
-                                        if ($firstMedia->thumbnail_path) {
-                                            $thumbSrc = asset('storage/' . $firstMedia->thumbnail_path);
-                                        } elseif ($firstMedia->video_url) {
-                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
-                                            $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/mqdefault.jpg' : null;
-                                        }
-                                        $isVideoThumb = true;
-                                    } else {
-                                        $thumbSrc = asset('storage/' . $firstMedia->image_path);
-                                    }
-                                @endphp
-                                <div class="gallery-frame" data-index="{{ $erfanIdx }}"
-                                    onclick="openErfanModal({{ $gallery->id }})">
-                                    @if ($thumbSrc)
-                                        <img src="{{ $thumbSrc }}" alt="{{ $gallery->title }}" class="gallery-thumbnail">
-                                    @elseif ($isVideoThumb)
-                                        <div class="gallery-thumbnail d-flex align-items-center justify-content-center" style="background:#1e1e2e; height:240px;">
-                                            <i class="fas fa-film" style="font-size:40px; color:#ccc;"></i>
-                                        </div>
-                                    @endif
-                                    <div class="gallery-hover-btn">
-                                        @if ($isVideoThumb)<i class="fas fa-play"></i>@else<i class="fas fa-expand-alt"></i>@endif
-                                    </div>
-                                    <div class="gallery-overlay">
-                                        <h5>{{ $gallery->title }}</h5>
-                                        <p>{{ Str::limit($gallery->deskripsi ?? '', 60) }}</p>
-                                    </div>
-                                </div>
-                                @php $erfanIdx++; @endphp
-                            @endif
-                        @endforeach
-                    </div>
-                    {{-- Modal Erfan di luar gallery-grid --}}
-                    @foreach ($galleriesErfan as $gallery)
-                        @if ($gallery->images->isNotEmpty())
-                            <div id="erfan-modal-{{ $gallery->id }}" class="gallery-modal">
-                                <div class="modal-content">
-                                    <span class="close-btn" onclick="closeErfanModal({{ $gallery->id }})">&times;</span>
-                                    <h3>{{ $gallery->title }}</h3>
-                                    <div class="modal-slider-wrapper">
-                                        <button class="nav-btn left" onclick="slideErfan({{ $gallery->id }}, -1)">&#8592;</button>
-                                        <div class="modal-slider" id="erfan-slider-{{ $gallery->id }}">
-                                            <div class="slide-track">
-                                                @foreach ($gallery->images as $image)
-                                                    <div class="slide-item">
-                                                        @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
-                                                            <iframe src="{{ $image->getYoutubeEmbedUrl() }}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen
-                                                                style="width:100%; height:400px; border-radius:8px;">
-                                                            </iframe>
-                                                        @elseif ($image->isLocalVideo())
-                                                            <video controls style="max-width:100%; max-height:65vh; border-radius:8px; background:#000;">
-                                                                <source src="{{ asset('storage/' . $image->image_path) }}">
-                                                                Browser Anda tidak mendukung pemutaran video.
-                                                            </video>
-                                                        @elseif ($image->image_path)
-                                                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Foto Galeri Erfan">
-                                                        @endif
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        <button class="nav-btn right" onclick="slideErfan({{ $gallery->id }}, 1)">&#8594;</button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                    @else
-                        <p class="text-center text-muted mt-4">Belum ada galeri Erfan.</p>
-                    @endif
-                </div>
-                {{-- ===== END TABS ===== --}}
             </div>
         </section>
 
@@ -992,36 +898,6 @@
             }
             function slideGalleryGrid(direction) {
                 const slider = document.getElementById('gallerySlider');
-                if (slider) slider.scrollBy({ left: 320 * direction, behavior: 'smooth' });
-            }
-
-            // Galeri Erfan â€” modal & slider
-            function openErfanModal(id) {
-                document.getElementById('erfan-modal-' + id).classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            function closeErfanModal(id) {
-                const modal = document.getElementById('erfan-modal-' + id);
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-                const track = modal.querySelector('.slide-track');
-                if (track) track.style.transform = 'translateX(0)';
-                if (erfanSlidePos[id] !== undefined) erfanSlidePos[id] = 0;
-                modal.querySelectorAll('video').forEach(v => v.pause());
-            }
-            const erfanSlidePos = {};
-            function slideErfan(id, direction) {
-                const slider = document.getElementById('erfan-slider-' + id);
-                if (!slider) return;
-                const track = slider.querySelector('.slide-track');
-                const items = track.querySelectorAll('.slide-item');
-                if (!items.length) return;
-                if (erfanSlidePos[id] === undefined) erfanSlidePos[id] = 0;
-                erfanSlidePos[id] = (erfanSlidePos[id] + direction + items.length) % items.length;
-                track.style.transform = `translateX(-${erfanSlidePos[id] * 100}%)`;
-            }
-            function slideErfanGrid(direction) {
-                const slider = document.getElementById('erfanSlider');
                 if (slider) slider.scrollBy({ left: 320 * direction, behavior: 'smooth' });
             }
 
