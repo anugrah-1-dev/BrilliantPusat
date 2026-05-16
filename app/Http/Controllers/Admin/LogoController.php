@@ -24,17 +24,15 @@ class LogoController extends Controller
         $logo = Logo::first();
 
         if ($logo && $logo->image_path) {
-            Storage::disk('public')->delete('logos/' . $logo->image_path);
+            Storage::disk('public')->delete($logo->image_path);
         }
 
-        $file     = $request->file('image_path');
-        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('logos', $filename, 'public');
+        $path = $request->file('image_path')->store('logos', 'public');
 
         if ($logo) {
-            $logo->update(['image_path' => $filename]);
+            $logo->update(['image_path' => $path]);
         } else {
-            Logo::create(['image_path' => $filename]);
+            Logo::create(['image_path' => $path]);
         }
 
         return redirect()->route('admin.logos.index')->with('alert', [
