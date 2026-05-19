@@ -58,7 +58,7 @@ class LaundryPackageSeeder extends Seeder
         ];
 
         foreach ($packages as $package) {
-            LaundryPackage::firstOrCreate(
+            LaundryPackage::updateOrCreate(
                 ['nama_paket' => $package['nama_paket'], 'jenis' => $package['jenis']],
                 $package
             );
