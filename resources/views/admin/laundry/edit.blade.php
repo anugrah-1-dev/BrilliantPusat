@@ -61,8 +61,8 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Rp</span>
                                                         </div>
-                                                        <input type="text" class="form-control" id="harga"
-                                                            name="harga"
+                                                        <input type="number" class="form-control" id="harga"
+                                                            name="harga" min="0" step="1"
                                                             value="{{ old('harga', $laundryPackage->harga) }}" required>
                                                     </div>
                                                 </div>
@@ -186,22 +186,7 @@
                     theme: 'bootstrap4'
                 });
 
-                // Inputmask untuk harga
-                $('#harga').inputmask({
-                    'alias': 'numeric',
-                    'groupSeparator': '.',
-                    'autoGroup': true,
-                    'digits': 0,
-                    'digitsOptional': false,
-                    'prefix': '',
-                    'placeholder': '0'
-                });
 
-                // Convert currency ke angka sebelum submit
-                $('#laundryForm').on('submit', function() {
-                    var harga = $('#harga').val().replace(/[^\d]/g, '');
-                    $('#harga').val(harga);
-                });
             });
         </script>
     @stop
