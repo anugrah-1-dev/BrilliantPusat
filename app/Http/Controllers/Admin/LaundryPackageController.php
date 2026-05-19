@@ -58,7 +58,7 @@ class LaundryPackageController extends Controller
             'periode'    => 'nullable|integer',
             'status'     => 'required|in:aktif,nonaktif',
             'deskripsi'  => 'nullable|string',
-            'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
 
         $data = $request->except('thumbnail');
