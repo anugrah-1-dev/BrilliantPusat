@@ -786,7 +786,7 @@
                                         if ($firstMedia->thumbnail_path) {
                                             $thumbSrc = asset('storage/' . $firstMedia->thumbnail_path);
                                         } elseif ($firstMedia->video_url) {
-                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $firstMedia->video_url ?? '', $ytMatch);
+                                            preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/|youtube\.com/shorts/)([a-zA-Z0-9_-]{11})%i', $firstMedia->video_url ?? '', $ytMatch);
                                             $thumbSrc = isset($ytMatch[1]) ? 'https://img.youtube.com/vi/' . $ytMatch[1] . '/mqdefault.jpg' : null;
                                         }
                                         $isVideoThumb = true;
