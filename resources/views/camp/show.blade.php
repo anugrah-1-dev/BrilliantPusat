@@ -420,15 +420,15 @@
                     <div class="row g-3 mb-4">
                         <div class="col-12 col-md-6">
                             <label for="nama_lengkap" class="form-label fw-semibold">Nama Lengkap</label>
-                            <input type="text" name="nama_lengkap" class="form-control form-control-lg" required>
+                            <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control form-control-lg" required>
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="email" class="form-label fw-semibold">Email</label>
-                            <input type="email" name="email" class="form-control form-control-lg" required>
+                            <input type="email" id="email" name="email" class="form-control form-control-lg" required>
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="no_hp" class="form-label fw-semibold">No HP</label>
-                            <input type="text" name="no_hp" class="form-control form-control-lg" required>
+                            <input type="text" id="no_hp" name="no_hp" class="form-control form-control-lg" required>
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="asal_kota" class="form-label fw-semibold">Alamat</label>
@@ -454,7 +454,7 @@
 
                         <div class="col-12 col-md-6">
                             <label for="period_id" class="form-label fw-semibold">Periode </label>
-                            <select name="period_id" class="form-select form-select-lg" required>
+                            <select id="period_id" name="period_id" class="form-select form-select-lg" required>
                                 <option value="">-- Pilih Periode --</option>
                                 @foreach ($periods as $period)
                                     @php
