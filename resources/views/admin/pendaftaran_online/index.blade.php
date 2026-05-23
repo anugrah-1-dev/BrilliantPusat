@@ -47,11 +47,11 @@
                     <!-- Filter tanggal -->
                     <div class="form-group">
                         <label for="start_date">Dari Tanggal</label>
-                        <input type="date" name="start_date" class="form-control" required>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="end_date">Sampai Tanggal</label>
-                        <input type="date" name="end_date" class="form-control" required>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required>
                     </div>
 
                     <!-- Filter program -->
@@ -205,7 +205,7 @@
                     @empty
                         <tr>
                             {{-- Sesuaikan colspan dengan jumlah kolom baru --}}
-                            <td colspan="13" class="text-center py-4">Belum ada pendaftar.</td>
+                            <td colspan="15" class="text-center py-4">Belum ada pendaftar.</td>
                         </tr>
                     @endforelse
                 </tbody>

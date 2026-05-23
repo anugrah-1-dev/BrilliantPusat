@@ -47,11 +47,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="start_date">Dari Tanggal</label>
-                            <input type="date" name="start_date" class="form-control" required>
+                            <input type="date" id="start_date" name="start_date" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="end_date">Sampai Tanggal</label>
-                            <input type="date" name="end_date" class="form-control" required>
+                            <input type="date" id="end_date" name="end_date" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -203,12 +203,10 @@
                                     </div>
                                 </td>
 
-                                <!-- Bootstrap JS (should be included in the main layout, not here) -->
-                                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="12" class="text-center py-4">Belum ada pendaftar.</td>
+                                <td colspan="15" class="text-center py-4">Belum ada pendaftar.</td>
                             </tr>
                         @endforelse
                     </tbody>

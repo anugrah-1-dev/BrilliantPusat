@@ -197,7 +197,10 @@
 
             // Auto-hide alert setelah 5 detik
             setTimeout(function() {
-                $('.alert').alert('close');
+                document.querySelectorAll('.alert').forEach(function(el) {
+                    el.classList.remove('show');
+                    setTimeout(function() { el.remove(); }, 300);
+                });
             }, 5000);
         });
     </script>

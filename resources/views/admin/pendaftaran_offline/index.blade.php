@@ -45,12 +45,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Dari Tanggal:</label>
-                            <input type="date" name="start_date" class="form-control" required>
+                            <label for="start_date">Dari Tanggal:</label>
+                            <input type="date" id="start_date" name="start_date" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Sampai Tanggal:</label>
-                            <input type="date" name="end_date" class="form-control" required>
+                            <label for="end_date">Sampai Tanggal:</label>
+                            <input type="date" id="end_date" name="end_date" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Pilih Program Bahasa:</label>

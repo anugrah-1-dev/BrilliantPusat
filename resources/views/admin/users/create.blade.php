@@ -14,17 +14,17 @@
             <div class="row">
                 <div class="col-md-6">
                     <x-adminlte-input name="name" label="Nama" placeholder="Masukkan nama user"
-                        value="{{ old('name') }}" required />
+                        value="{{ old('name') }}" autocomplete="name" required />
                 </div>
                 <div class="col-md-6">
                     <x-adminlte-input name="email" label="Email" type="email" placeholder="Masukkan email user"
-                        value="{{ old('email') }}" required />
+                        value="{{ old('email') }}" autocomplete="email" required />
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
-                    <x-adminlte-input name="password" label="Password" type="password" placeholder="Password" required />
+                    <x-adminlte-input name="password" label="Password" type="password" placeholder="Password" autocomplete="new-password" required />
                 </div>
                 <div class="col-md-6">
                     <x-adminlte-select name="roles[]" label="Role" multiple required>
