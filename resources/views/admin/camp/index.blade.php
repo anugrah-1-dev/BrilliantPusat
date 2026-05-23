@@ -91,7 +91,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($pendaftar as $index => $data)
+                        @foreach ($pendaftar as $index => $data)
                             <tr>
                                 <td>{{ ($pendaftar->currentPage() - 1) * $pendaftar->perPage() + $index + 1 }}</td>
 
@@ -154,11 +154,7 @@
                                 </td>
 
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="15" class="text-center py-4">Belum ada pendaftar.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
 

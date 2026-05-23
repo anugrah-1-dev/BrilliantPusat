@@ -103,7 +103,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($pendaftar as $index => $data)
+                    @foreach ($pendaftar as $index => $data)
                         <tr>
                             <td>{{ $pendaftar->firstItem() + $index }}</td>
                             <td>{{ $data->trx_id }}</td>
@@ -202,12 +202,7 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            {{-- Sesuaikan colspan dengan jumlah kolom baru --}}
-                            <td colspan="15" class="text-center py-4">Belum ada pendaftar.</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
 
             </table>

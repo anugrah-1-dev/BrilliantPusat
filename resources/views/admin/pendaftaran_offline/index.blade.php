@@ -102,7 +102,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($pendaftar as $key => $data)
+                        @foreach ($pendaftar as $key => $data)
                             <tr>
                                 <td>{{ $pendaftar->firstItem() + $key }}</td>
                                 <td>{{ $data->trx_id }}</td>
@@ -237,11 +237,7 @@
                                 </td>
 
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="19" class="text-center py-4">Belum ada pendaftar.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
