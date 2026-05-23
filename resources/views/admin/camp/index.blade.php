@@ -145,16 +145,11 @@
                                             style="width: 38px; height: 38px;">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <form action="{{ route('admin.pendaftaran.camp.destroy', $data->id) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Yakin ingin menghapus pendaftaran ini?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus"
-                                                style="width: 38px; height: 38px;">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger btn-sm btn-delete" title="Hapus"
+                                            data-url="{{ route('admin.pendaftaran.camp.destroy', $data->id) }}"
+                                            style="width: 38px; height: 38px;">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
                                 </td>
 
@@ -173,6 +168,12 @@
             </div>
         </div>
     </div>
+
+    {{-- Hidden delete form (outside table) --}}
+    <form id="deleteForm" method="POST" style="display:none;">
+        @csrf
+        @method('DELETE')
+    </form>
 
     {{-- Status Modals (outside table to prevent DataTables DOM error) --}}
     @foreach ($pendaftar as $data)
@@ -280,6 +281,13 @@
 
             $('#searchInput').on('keyup', function() {
                 $('#pendaftarTable').DataTable().search(this.value).draw();
+            });
+
+            $(document).on('click', '.btn-delete', function() {
+                const url = $(this).data('url');
+                if (confirm('Yakin ingin menghapus pendaftaran ini?')) {
+                    $('#deleteForm').attr('action', url).submit();
+                }
             });
         });
     </script>
