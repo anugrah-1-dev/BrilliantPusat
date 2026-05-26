@@ -41,28 +41,29 @@
         <div class="container">
             <!-- Bagian kiri: Foto pamflet -->
             <div class="pamflet">
-                <img src={{ asset('asset/img/arabbaru1.jpg') }} alt="Pamflet Program Brilliant Alsaeid">
+                <img src={{ asset('asset/img/arap.jpeg') }} alt="Pamflet Program Brilliant Alsaeid">
             </div>
 
             <!-- Bagian kanan: Deskripsi program -->
             <div class="program-info">
                 <h2>Program Brilliant Alsaeid Arabic Course</h2>
                 <p>
-                    Program ini dirancang bagi kamu yang ingin menguasai Bahasa Arab secara aktif maupun pasif dalam 1
-                    bulan.
-                    Tersedia kelas Muhadatsah (Mustawa Awwal, Tsani, Tsalits) dan Baca Kitab (Tamhid, Muthawassith,
-                    Mutaqaddim).
-                    Peserta akan mendapat 5 kali pertemuan sehari, dibimbing pengajar berpengalaman, belajar dengan
-                    metode menarik,
-                    dan mengikuti program tambahan seperti Khithobah, Diroasah Jama’iyyah, Musyahadah, dan Fashl
+                    Program ini dirancang bagi kamu yang ingin menguasai Bahasa Arab secara aktif maupun pasif.
+                    Tersedia kelas Muhadatsah (I'dad, Mustawa Awwal, Tsani, Tsalits) dan Baca Kitab (Tamhid, Muthawassith,
+                    Mutaqaddim, Tarjamah).
+                    Peserta akan mendapat 6 kali pertemuan sehari (4 sesi kelas & 2 kegiatan asrama), dibimbing pengajar
+                    berpengalaman, belajar dengan metode menarik,
+                    dan mengikuti program tambahan seperti Khithobah, Diroasah Jama'iyyah, Musyahadah, dan Fashl
                     Khoriji.
                 </p>
                 <ul>
-                    <li><strong>Program Offline:</strong> Rp. 665.000</li>
-                    <li><strong>Program Online:</strong> Rp. 385.000</li>
+                    <li><strong>1 Bulan Program + Camp:</strong> Rp. 775.000</li>
+                    <li><strong>1 Bulan Online non Camp:</strong> Rp. 396.000</li>
+                    <li><strong>2 Pekan Program + Camp:</strong> Rp. 475.000</li>
+                    <li><strong>2 Pekan Online non Camp:</strong> Rp. 189.000</li>
                 </ul>
                 <p>
-                    Kontak kami via Instagram @Brilliant_alsaeid_arabic, TikTok Brilliantalsaeid
+                    Kontak kami via Instagram @brilliant_alsaeid_arabic, TikTok @brilliantalsaeid
                 </p>
             </div>
 

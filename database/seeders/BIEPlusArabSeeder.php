@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace Database\Seeders;
 
@@ -13,62 +13,87 @@ class BIEPlusArabSeeder extends Seeder
         // Hapus data lama Arab di bieplus
         ProgramOffline::where('kursus', 'bieplus')->where('program_bahasa', 'Arab')->delete();
 
+        $benefitCamp = [
+            '6 kali pertemuan sehari (4 sesi kelas & 2 kegiatan asrama)',
+            'Dibimbing pengajar berpengalaman dan kompeten',
+            'Metode belajar bervariasi dan menarik',
+            "Khithobah, Diroasah Jama'iyyah, Musyahadah, dan Fashl Khoriji",
+        ];
+
         $programsOffline = [
+            // === PROGRAM MUHADATSAH ===
             [
-                'nama'             => "I'dad",
-                'lama_program'     => '22 Hari',
-                'kategori'         => "I'dad",
-                'harga'            => 165000,
-                'jadwal_mulai'     => '2025-09-08',
-                'jadwal_selesai'   => '2025-09-30',
-                'features_program' => json_encode([
-                    'Pelajaran dasar bahasa Arab',
-                    'Qowaid',
-                    "Qira'ah",
-                    'Muhadatsah',
-                ]),
+                'nama'             => "I'dad (Basic)",
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Muhadatsah',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
             ],
             [
                 'nama'             => 'Mustawa Awwal',
-                'lama_program'     => '22 Hari',
-                'kategori'         => 'Mustawa 1',
-                'harga'            => 460000,
-                'jadwal_mulai'     => '2025-09-08',
-                'jadwal_selesai'   => '2025-09-30',
-                'features_program' => json_encode([
-                    'Latihan percakapan',
-                    'Penyusunan kalimat sederhana',
-                    'Target hingga 1500 kosakata',
-                    'Kelas dan suasana belajar yang nyaman',
-                ]),
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Muhadatsah',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
             ],
             [
                 'nama'             => 'Mustawa Tsani',
-                'lama_program'     => '22 Hari',
-                'kategori'         => 'Mustawa 2',
-                'harga'            => 460000,
-                'jadwal_mulai'     => '2025-09-08',
-                'jadwal_selesai'   => '2025-09-30',
-                'features_program' => json_encode([
-                    'Pendalaman kaidah',
-                    'Percakapan lancar',
-                    'Presentasi topik',
-                    'Target hingga 2100 kosakata',
-                ]),
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Muhadatsah',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
             ],
             [
-                'nama'             => 'Mustawa Tsalist',
-                'lama_program'     => '22 Hari',
-                'kategori'         => 'Mustawa 3',
-                'harga'            => 460000,
-                'jadwal_mulai'     => '2025-09-08',
-                'jadwal_selesai'   => '2025-09-30',
-                'features_program' => json_encode([
-                    'Penekanan dalam fashohah',
-                    "Insya' (mengarang)",
-                    'Latihan alih bahasa',
-                    'Target hingga 3000 lebih kosakata',
-                ]),
+                'nama'             => 'Mustawa Tsalits',
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Muhadatsah',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
+            ],
+            // === PROGRAM BACA KITAB ===
+            [
+                'nama'             => 'Tamhid',
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Baca Kitab',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
+            ],
+            [
+                'nama'             => 'Muthawassith',
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Baca Kitab',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
+            ],
+            [
+                'nama'             => 'Mutaqaddim',
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Baca Kitab',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
+            ],
+            [
+                'nama'             => 'Tarjamah',
+                'lama_program'     => '1 Bulan',
+                'kategori'         => 'Baca Kitab',
+                'harga'            => 775000,
+                'jadwal_mulai'     => '2026-06-01',
+                'jadwal_selesai'   => '2026-06-30',
+                'features_program' => json_encode($benefitCamp),
             ],
         ];
 
